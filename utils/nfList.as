@@ -17,7 +17,7 @@ package nextFramework.utils
 		{
 			//not really safely !!
 			if(list != null && fromList != null){
-				for each(var node in fromList) {
+				for each(var node:Object in fromList) {
 					list.push(node);
 				}
 			}

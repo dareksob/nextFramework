@@ -16,7 +16,9 @@
 	import nextFramework.utils.nfObject;
 	import nextFramework.event.nfEachParam;
 	
-	/*
+	/**
+	 * Base Class for mulitselection and multiformation of your objects
+	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
@@ -28,7 +30,7 @@
 	public dynamic class nF
 	{
 		
-		/*
+		/**
 		 * set selection properies
 		 */
 		public function prop(conf:Object = null):nF {
@@ -36,9 +38,13 @@
 			return this;
 		}
 		
-		/*
+		/**
 		 * call a function of the selection objects
 		 * warning low preformce
+		 * 
+		 * @param	name
+		 * @param	...args
+		 * @return	nF
 		 */
 		public function func(name:String, ...args):nF {
 			this.each(function(node:Object):void {
@@ -47,8 +53,11 @@
 			return this;
 		}
 		
-		/*
+		/**
 		 * call a function of the selection objects
+		 * 
+		 * @param	script
+		 * @return	nF
 		 */
 		public function condition(script:String):nF {
 			var cond:nfCondition = new nfCondition;
@@ -56,8 +65,12 @@
 			return this;
 		}
 		
-		/*
+		/**
 		 * loop all nodes
+		 * 
+		 * @param	func
+		 * @param	detail
+		 * @return
 		 */
 		public function each(func:Function, detail:Boolean = false):nF {
 			for (var index:int = 0; index < this.selection.length; index++) {
@@ -71,9 +84,14 @@
 			return this;
 		}
 		
-		/*
+		/**
 		 * create loader object
-		 */		
+		 * 
+		 * @param	type
+		 * @param	url
+		 * @param	conf
+		 * @return	nF
+		 */
 		public function load(type:String, url:Object, conf:Object = null):nF {
 			//auto setting
 			if (!conf) conf = { selection: this._selection, root: this._root };
@@ -85,8 +103,11 @@
 			return this;
 		}
 		
-		/*
+		/**
 		 * create multi Loader by array
+		 * 
+		 * @param	list
+		 * @return	nF
 		 */
 		public function loadList(list:Array):nF {
 			if (!nfLoader.instance.loadList(list)) {
@@ -95,16 +116,24 @@
 			return this;
 		}
 		
-		/*
+		/**
 		 * return a loadernode by url, name see nfLoader
+		 * 
+		 * @param	conf
+		 * @return nfLoaderNode
 		 */
 		public function getLoader(conf:Object):nfLoaderNode {
 			return nfLoader.instance.getLoader(conf);
 		}
 		
 
-		/*
+		/**
 		 * add child to the selection (if class), beta
+		 * 
+		 * @param	object
+		 * @param	conf
+		 * @param	filter
+		 * @return
 		 */
 		public function addChild(object:Object, conf:Object = null, filter:Object = null):nF {
 			var selection:Vector.<Object> = new Vector.<Object>();
@@ -124,8 +153,12 @@
 			return this;
 		}
 		
-		/*
+		/**
 		 * remove childs of the root by query
+		 * 
+		 * @param	filter
+		 * @param	conf
+		 * @return
 		 */
 		public function removeChild(filter:Object = null, conf:Object = null):nF {
 			nfFlashObject.create().removeChild(
@@ -136,15 +169,24 @@
 		}
 		
 		
-		/*
+		/**
 		 * add events to selection
+		 * 
+		 * @param	func
+		 * @param	detail
+		 * @return	nF
 		 */
 		public function addEvent(eventname:String, func:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):nF {
 			nfFlashObject.create().addEvent(this.selection, eventname, func, useCapture, priority, useWeakReference);
 			return this;
 		}
-		/*
+		
+		/**
 		 * remove events to selection
+		 * 
+		 * @param	func
+		 * @param	detail
+		 * @return	nF
 		 */
 		public function removeEvent(eventname:String, func:Function, useCapture:Boolean = false):nF {
 			nfFlashObject.create().removeEvent(this.selection, eventname, func, useCapture);
@@ -152,23 +194,36 @@
 		}
 		
 		
-		/*
+		/**
 		 * add Bitmapfilter
+		 * 
+		 * @param	func
+		 * @param	detail
+		 * @return	nF
 		 */
 		public function addFilter(filter:Object, conf:Object = null):nF {
 			nfFlashFilter.create().addFilter(this.selection, filter, conf);
 			return this;
 		}
 		
-		/*
+		/**
 		 * remove Bitmapfilter
+		 * 
+		 * @param	func
+		 * @param	detail
+		 * @return	nF
 		 */
 		public function removeFilter(filter:Object):nF {
 			nfFlashFilter.create().removeFilter(this.selection, filter);
 			return this;
 		}
-		/*
+		
+		/**
 		 * change property of Bitmapfilter, if the object have filter
+		 * 
+		 * @param	func
+		 * @param	detail
+		 * @return	nF
 		 */
 		public function changeFilter(filter:Object, conf:Object):nF {
 			nfFlashFilter.create().changeFilter(this.selection, filter, conf);

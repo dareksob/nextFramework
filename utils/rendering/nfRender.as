@@ -14,7 +14,7 @@
 		
 		
 		
-		public function nfRender(){
+		public function nfRender():void{
 			if (!_canCreate) {
 				throw new Error('nfRender is a singelton class use the instance property');
 			}
@@ -54,7 +54,7 @@
 			this._lastRenderTime = renderTime / 1000;
 
 			//call registed functions
-			for each(var funcNode in _renderList) {
+			for each(var funcNode:Function in _renderList) {
 				funcNode(this._lastRenderTime);
 			}
 		}
@@ -66,7 +66,7 @@
 		}
 		public function removeRender(func:Function):nfRender {
 			var tempList:Vector.<Function> = new Vector.<Function>();
-			for each(var funcNode in _renderList) {
+			for each(var funcNode:Function in _renderList) {
 				if (funcNode != func) {
 					tempList.push(func);
 				}

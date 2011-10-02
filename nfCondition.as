@@ -13,7 +13,7 @@
 	{
 		
 		public function filter(list:Vector.<Object>, script:String):Vector.<Object> {
-			var nlist = new Vector.<Object>();
+			var nlist:Vector.<Object> = new Vector.<Object>();
 			for each(var node:Object in list) {
 				if (this.isTrue(node, script)) {
 					nlist.push(node);

@@ -15,7 +15,7 @@ package nextFramework
 		
 		private var orderParam:uint = Array.CASEINSENSITIVE;
 		
-		public function sort(list:Vector.<Object>, prop:String, order:String = 'up') {
+		public function sort(list:Vector.<Object>, prop:String, order:String = 'up'):Vector.<Object> {
 			
 			var propArray:Array = this.getPropArray(list, prop);;
 			propArray.sortOn('prop', this.orderParam);
