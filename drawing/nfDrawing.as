@@ -61,10 +61,10 @@
 			);
 			
 			//regist fillStyles
-			nfDrawing._registFillStyleCollection.addByValue(null, nfFillStyle);
-			nfDrawing._registFillStyleCollection.addByValue('Bitmap', nfBitmapFillStyle);
-			nfDrawing._registFillStyleCollection.addByValue('Gradiant', nfGradiantFill);
-			nfDrawing._registFillStyleCollection.addByValue('Shader', nfShaderFillStyle);
+			nfDrawing._registFillStyleCollection.add(new nfKeyValueNode(null, nfFillStyle, true));
+			nfDrawing._registFillStyleCollection.add(new nfKeyValueNode('Bitmap', nfBitmapFillStyle, true));
+			nfDrawing._registFillStyleCollection.add(new nfKeyValueNode('Gradiant', nfGradiantFill, true));
+			nfDrawing._registFillStyleCollection.add(new nfKeyValueNode('Shader', nfShaderFillStyle, true));
 		}
 		
 		function nfDrawing(graphics:Graphics, conf:Object = null) {
@@ -117,7 +117,7 @@
 			}else if (this.flashDraw) {
 				nfFlashDrawing.create().draw(this.graphics, this.flashDraw);
 			}else {
-				nF.addLog('No drawing data', this);
+				nfRegistry.addLog('No drawing data', this);
 			}
 			
 			this.graphics.endFill();

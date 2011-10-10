@@ -3,11 +3,13 @@
 	import flash.display.DisplayObject;
 	import flash.display.Shader;
 	import flash.filters.ShaderFilter;
-	import nextFramework.nF;
+	import nextFramework.nfRegistry;
 	import nextFramework.nfProperties;
 	import flash.filters.*;
 	
-	/*
+	/**
+	 * filter manager for flash filters
+	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
@@ -35,7 +37,7 @@
 							new Error('Filter couldn\'t initzialized. filter:'+filter.toString());
 						}
 					}catch (error:Error) {
-						nF.addLog(error.message, this);
+						nfRegistry.addLog(error.message, this);
 						return this;
 					}
 				}

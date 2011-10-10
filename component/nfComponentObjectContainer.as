@@ -1,14 +1,16 @@
 ﻿package nextFramework.component 
-{
-	import nextFramework.nfProperties;
-	
-	/*
-	 * @author Darius Sobczak
+{	
+	import nextFramework.utils.nfObject;
+
+	/**
+	 * container and connector for components
+	 * 
+	 * @author 	Darius Sobczak
 	 * @website dsobczak.de
-	 * @mail mail@dsobczak.de
+	 * @mail 	mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.04 beta
+	 * @version 1.07
 	 */
 	 
 	public class nfComponentObjectContainer
@@ -25,10 +27,10 @@
 		/*
 		 * componentObjectList
 		 */
-		private var _componentObjectList:Vector.<nfComponentObject> = new Vector.<nfComponentObject>();
+		private var _componentObjects:Vector.<IComponentObject> = new Vector.<IComponentObject>();
 		
-		public function get componentObjectList():Vector.<nfComponentObject> { 
-			return this._componentObjectList; 
+		public function get componentObjects():Vector.<IComponentObject> { 
+			return this._componentObjects; 
 		}
 		
 		/*
@@ -40,9 +42,9 @@
 			
 			var compobj:* = new comp(this, this._object);
 						
-			if(compobj is nfComponentObject){
-				nfProperties.setObjectProperties(compobj, conf);
-				index = this._componentObjectList.push(compobj as nfComponentObject);
+			if(compobj is IComponentObject){
+				nfObject.setProps(compobj, conf);
+				index = this._componentObjects.push(compobj as IComponentObject);
 				compobj.init(conf);
 				compobj.added();
 			}
@@ -50,19 +52,19 @@
 		}
 		
 		public function removeComponent(comp:Class):void {
-			var nList:Vector.<nfComponentObject> = new Vector.<nfComponentObject>();
-			for each(var node:nfComponentObject in this.componentObjectList) {
+			var nList:Vector.<IComponentObject> = new Vector.<IComponentObject>();
+			for each(var node:IComponentObject in this.componentObjects) {
 				if (!(node is comp)) {
 					nList.push(node);
 				}else {
 					node.removed();
 				}
 			}
-			this._componentObjectList = nList;
+			this._componentObjects = nList;
 		}
 		
 		public function hasComponent(comp:Class):Boolean {
-			for each(var node:nfComponentObject in this.componentObjectList) {
+			for each(var node:IComponentObject in this.componentObjects) {
 				if (node is comp) {
 					return true;
 				}
@@ -70,8 +72,8 @@
 			return false;
 		}
 		
-		public function getComponent(comp:Class):* {
-			for each(var node:nfComponentObject in this.componentObjectList) {
+		public function getComponent(comp:Class):IComponentObject {
+			for each(var node:IComponentObject in this.componentObjects) {
 				if (node is comp) {
 					return node;
 				}
@@ -79,8 +81,8 @@
 			return null;
 		}
 		
-		public function getComponentByName(name:String):* {
-			for each(var node:nfComponentObject in this.componentObjectList) {
+		public function getComponentByName(name:String):IComponentObject {
+			for each(var node:IComponentObject in this.componentObjects) {
 				if (node.name == name) {
 					return node;
 				}
@@ -89,7 +91,7 @@
 		}
 		
 		public function get length():uint { 
-			return this.componentObjectList.length; 
+			return this.componentObjects.length; 
 		}
 		
 	}

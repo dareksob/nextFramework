@@ -1,7 +1,7 @@
 ﻿package nextFramework.utils 
 {
 	import flash.utils.*;
-	import nextFramework.nF;
+	import nextFramework.nfRegistry;
 	import nextFramework.nfProperties;
 	
 	/*
@@ -23,7 +23,7 @@
 					var classObject:Class = nfClass.getClass(object);
 					clone = new classObject();
 				}catch (error:Error) {
-					nF.addLog(error.message, new nfClass);
+					nfRegistry.addLog(error.message, new nfClass);
 				}
 				
 				//data
@@ -56,7 +56,7 @@
 			try{
 				return getDefinitionByName(classname) as Class;
 			}catch (error:Error) {
-				nF.addLog(error, 'nfClass');
+				nfRegistry.addLog(error, 'nfClass');
 			}
 
 			return null;

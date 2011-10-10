@@ -1,7 +1,7 @@
 ﻿package nextFramework.loader 
 {
 	import nextFramework.IExtension;
-	import nextFramework.nF;
+	import nextFramework.nfRegistry;
 	import nextFramework.loader.types.*;
 	
 	/*
@@ -54,7 +54,7 @@
 				
 				if (this.checkDublicate && loaderNode.name != '') {
 					if (this.getLoader({name: loaderNode.name, url: loaderNode.url})) {
-						nF.addLog('Dublicate loader, Name:' + loaderNode.name + ' URL:' + loaderNode.url, this);
+						nfRegistry.addLog('Dublicate loader, Name:' + loaderNode.name + ' URL:' + loaderNode.url, this);
 						addNode = false;
 					}
 				}

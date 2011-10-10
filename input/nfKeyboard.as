@@ -3,7 +3,7 @@
 	import flash.display.Stage;
 	import flash.events.KeyboardEvent;
 	import nextFramework.nF;
-	import nextFramework.nfRegisty;
+	import nextFramework.nfRegistry;
 	
 	/*
 	 * @author Darius Sobczak
@@ -141,14 +141,14 @@
 		
 		//init
 		static public function init():void {
-			var stage:Stage = nfRegisty.instance.stage;
+			var stage:Stage = nfRegistry.instance.stage;
 			
 			if (stage) {
 				var _this:nfKeyboard = nfKeyboard.instance;
 				stage.addEventListener(KeyboardEvent.KEY_DOWN, _this.eventKeyDown, false, 0, true);
 				stage.addEventListener(KeyboardEvent.KEY_UP, _this.eventKeyUp, false, 0, true);
 			}else {
-				nF.addLog('stage is undefined', nfKeyboard);
+				nfRegistry.addLog('stage is undefined', nfKeyboard);
 			}
 		}
 		

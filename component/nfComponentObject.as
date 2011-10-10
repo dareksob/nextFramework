@@ -10,7 +10,7 @@ package nextFramework.component
 	 * @version 1.0 beta
 	 */
 	 
-	public class nfComponentObject
+	public class nfComponentObject implements IComponentObject
 	{
 		
 		function nfComponentObject(container:nfComponentObjectContainer, object:Object, name:String = "") 

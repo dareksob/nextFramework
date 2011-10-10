@@ -1,12 +1,8 @@
 ﻿package nextFramework
 {
 	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
-	import flash.utils.flash_proxy;
-	import flash.utils.Proxy;
 	import nextFramework.component.nfComponent;
-	import nextFramework.debug.ILog;
-	import nextFramework.animation.nfAnimation;
+	import nextFramework.event.nfEachParam;
 	import nextFramework.flash.*;
 	import nextFramework.loader.nfLoader;
 	import nextFramework.loader.nfLoaderNode;
@@ -14,7 +10,6 @@
 	import nextFramework.transform.nfArrange;
 	import nextFramework.transform.nfTableArrange;
 	import nextFramework.utils.nfObject;
-	import nextFramework.event.nfEachParam;
 	
 	/**
 	 * Base Class for mulitselection and multiformation of your objects
@@ -98,7 +93,7 @@
 			else conf.selection = this._selection; conf.root = this._root;
 			
 			if (!nfLoader.instance.load(type, url, conf)) {
-				nF._log.addLog('nF.load, unknown loader type:' + type, this);
+				nfRegistry.addLog('nF.load, unknown loader type:' + type, this);
 			}
 			return this;
 		}
@@ -111,7 +106,7 @@
 		 */
 		public function loadList(list:Array):nF {
 			if (!nfLoader.instance.loadList(list)) {
-				nF._log.addLog('nF.loadList, not all load could be started', this);
+				nfRegistry.addLog('nF.loadList, not all load could be started', this);
 			}
 			return this;
 		}
@@ -383,31 +378,6 @@
 			return null;
 		}
 		
-		
-		
-		
-		/*
-		 * log object
-		 */
-		static private var _log:ILog;
-		public function get log():ILog { 
-			return nF._log; 
-		}
-		public function set log(value:ILog):void {
-			nF._log = value;
-		}
-		
-		/*
-		 * DEBUGGIN: catch the errors and messages methode, if regist a ILog class, nF Internal
-		 */
-		static public function addLog(message:*, caller:* = null):void {
-			if (nF._log is ILog) {
-				nF._log.addLog(message, caller);
-			}
-		}
-		
-		
-		
 		/*
 		 * Constructor
 		 */
@@ -426,7 +396,7 @@
 			nfComponent.init();
 			
 			//init registy, classes, and function
-			nfRegisty.instance
+			nfRegistry.instance
 				.initClasses(conf && conf.initClasses ? conf.initClasses : null)
 				.initFunc(conf && conf.initFunc ? conf.initFunc : null)
 				.setRoot(root);

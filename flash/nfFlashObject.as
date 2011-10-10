@@ -6,13 +6,15 @@
 	import nextFramework.utils.nfClass;
 	import nextFramework.utils.nfObject;
 	
-	/*
+	/**
+	 * wrapper class for display objects
+	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.0 beta
+	 * @version 1.06
 	 */
 	 
 	public class nfFlashObject
@@ -21,12 +23,22 @@
 		public function get objects():Vector.<Object> {
 			return this._objects;
 		}
+		
+		
 		private function clear():nfFlashObject {
 			this._objects = new Vector.<Object>();
 			return this;
 		}
 		
 		
+		/**
+		 * 
+		 * 
+		 * @param	parents is the selection list
+		 * @param	object have to be a class
+		 * @param	conf
+		 * @return	nfFlashObject
+		 */
 		public function addChild(parents:Vector.<Object>, object:Object, conf:Object = null):nfFlashObject {
 			this.clear();
 			
@@ -67,6 +79,13 @@
 			return this;
 		}
 		
+		/**
+		 * remove all childs, optional it call a removeFunc () function if it set
+		 * 
+		 * @param	list
+		 * @param	conf
+		 * @return	nfFlashObject
+		 */
 		public function removeChild(list:Vector.<Object>, conf:Object = null):nfFlashObject {
 			if (conf == null) { conf = { };	}
 			
@@ -98,6 +117,15 @@
 			return this;
 		}
 		
+		/**
+		 * add events listener
+		 * 
+		 * @param	list : object list
+		 * @param	eventname
+		 * @param	func
+		 * @param	useCapture
+		 * @return nfFlashObject
+		 */
 		public function addEvent(list:Vector.<Object>, eventname:String, func:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):nfFlashObject {
 			for each(var item:Object in list) {
 				if (item is EventDispatcher) {
@@ -107,6 +135,15 @@
 			return this;
 		}
 		
+		/**
+		 * remove events listener
+		 * 
+		 * @param	list : object list
+		 * @param	eventname
+		 * @param	func
+		 * @param	useCapture
+		 * @return nfFlashObject
+		 */
 		public function removeEvent(list:Vector.<Object>, eventname:String, func:Function, useCapture:Boolean = false):nfFlashObject {
 			for each(var item:Object in list) {
 				if (item is EventDispatcher) {
@@ -116,6 +153,13 @@
 			return this;
 		}
 		
+		/**
+		 * Set this index of a display object
+		 * 
+		 * @param	object
+		 * @param	index
+		 * @return
+		 */
 		public function setIndex(object:Object, index:Object):nfFlashObject {
 			if (object.hasOwnProperty('parent')) {
 				if (object.parent is DisplayObjectContainer) {
@@ -134,6 +178,12 @@
 			}
 			return this;
 		}
+		
+		/**
+		 * return this class
+		 * 
+		 * @return nfFlashObject
+		 */
 		
 		static public function create():nfFlashObject {
 			return new nfFlashObject();

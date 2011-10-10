@@ -4,7 +4,7 @@ package nextFramework.flash
 	import flash.display.ShaderInput;
 	import flash.display.ShaderParameter;
 	import flash.display.ShaderParameterType;
-	import nextFramework.nF;
+	import nextFramework.nfRegistry;
 	
 	/*
 	 * @author Darius Sobczak
@@ -12,7 +12,7 @@ package nextFramework.flash
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.03 beta
+	 * @version 1.07
 	 */
 	
 	public final class nfFlashShader
@@ -46,7 +46,7 @@ package nextFramework.flash
 				}
 				shader.data[name].value = value;
 			}catch (error:Error) {
-				nF.addLog(error.message, this);
+				nfRegistry.addLog(error.message, this);
 			}
 			return this;
 		}
@@ -55,7 +55,7 @@ package nextFramework.flash
 			try{
 				shader.data[name].src.image = value;
 			}catch (error:Error) {
-				nF.addLog(error.message, this);
+				nfRegistry.addLog(error.message, this);
 			}
 			return this;
 		}

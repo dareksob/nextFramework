@@ -1,19 +1,21 @@
 ﻿package nextFramework.collection 
 {
 	
-	/*
+	/**
+	 * list collection by key and value, optional can be unique and lockable objects
+	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.06
+	 * @version 1.07
 	 */
 	 
-	public final class nfKeyValueCollection
+	public class nfKeyValueCollection
 	{
 		function nfKeyValueCollection(unique:Boolean = false) {
-			this.unique = unique;
+			this._unique = unique;
 		}
 		
 		/*
@@ -23,15 +25,12 @@
 		public function get unique():Boolean { 
 			return this._unique; 
 		}
-		public function set unique(value:Boolean):void {
-			this._unique = value; 
-		}
 		
 		/*
 		 * collection
 		 */
-		private var _collection:Vector.<nfKeyValueNode> = new Vector.<nfKeyValueNode>();
-		public function get collection():Vector.<nfKeyValueNode> { 
+		private var _collection:Vector.<IKeyValueNode> = new Vector.<IKeyValueNode>();
+		public function get collection():Vector.<IKeyValueNode> { 
 			return this._collection; 
 		}
 		
@@ -43,15 +42,15 @@
 		}
 		
 		//get
-		public function getNodeByKey(key:Object):nfKeyValueNode {
-			for each(var kvnode:nfKeyValueNode in this.collection) {
+		public function getNodeByKey(key:Object):IKeyValueNode {
+			for each(var kvnode:IKeyValueNode in this.collection) {
 				if (kvnode.key == key) {
 					return kvnode;
 				}
 			}
 			return null;
 		}
-		public function getNodeAt(index:uint):nfKeyValueNode {
+		public function getNodeAt(index:uint):IKeyValueNode {
 			if (this.collection.length < index) {
 				return this.collection[index];
 			}
@@ -60,7 +59,7 @@
 		
 		//has
 		public function hasKey(key:Object):Boolean {
-			for each(var kvnode:nfKeyValueNode in this.collection) {
+			for each(var kvnode:IKeyValueNode in this.collection) {
 				if (kvnode.key == key) {
 					return true;
 				}
@@ -68,32 +67,34 @@
 			return false;
 		}
 		
-		//adding
-		public function add(node:nfKeyValueNode):nfKeyValueCollection {
+		/**
+		 * add a new keynode object
+		 * @param	node
+		 * @return	nfKeyValueCollection
+		 */
+		public function add(node:IKeyValueNode):nfKeyValueCollection {
 			if (this.unique) {
 				if (this.hasKey(node.key)) {
 					return this;
 				}
 			}
 			this.collection.push(node);
-			return this;
-		}
-		public function addByValue(key:Object, value:*):nfKeyValueCollection {
-			if (this.unique) {
-				if (this.hasKey(key)) {
-					return this;
-				}
-			}
-			this._collection.push(new nfKeyValueNode(key,value));
+			
 			return this;
 		}
 		
+		
 		//removing
-		public function remove(node:nfKeyValueNode):nfKeyValueCollection {
-			var nCollection:Vector.<nfKeyValueNode> = new Vector.<nfKeyValueNode>();
-			for each(var kvnode:nfKeyValueNode in this.collection) {
+		public function remove(node:IKeyValueNode):nfKeyValueCollection {
+			var nCollection:Vector.<IKeyValueNode> = new Vector.<IKeyValueNode>();
+			
+			for each(var kvnode:IKeyValueNode in this.collection) {
 				if (kvnode != node) {
 					nCollection.push(kvnode);
+				}else {
+					if (kvnode is ILockable && (kvnode as ILockable).isLocked) {
+						nCollection.push(kvnode);
+					}
 				}
 			}
 			this._collection = nCollection;
@@ -101,10 +102,14 @@
 		}
 		
 		public function removeByKey(key:Object):nfKeyValueCollection {
-			var nCollection:Vector.<nfKeyValueNode> = new Vector.<nfKeyValueNode>();
-			for each(var kvnode:nfKeyValueNode in this.collection) {
+			var nCollection:Vector.<IKeyValueNode> = new Vector.<IKeyValueNode>();
+			for each(var kvnode:IKeyValueNode in this.collection) {
 				if (kvnode.key != key) {
 					nCollection.push(kvnode);
+				}else {
+					if (kvnode is ILockable && (kvnode as ILockable).isLocked) {
+						nCollection.push(kvnode);
+					}
 				}
 			}
 			this._collection = nCollection;
@@ -112,24 +117,32 @@
 		}
 		
 		public function removeByValue(value:*):nfKeyValueCollection {
-			var nCollection:Vector.<nfKeyValueNode> = new Vector.<nfKeyValueNode>();
-			for each(var kvnode:nfKeyValueNode in this.collection) {
+			var nCollection:Vector.<IKeyValueNode> = new Vector.<IKeyValueNode>();
+			for each(var kvnode:IKeyValueNode in this.collection) {
 				if (kvnode.value != value) {
 					nCollection.push(kvnode);
+				}else {
+					if (kvnode is ILockable && (kvnode as ILockable).isLocked) {
+						nCollection.push(kvnode);
+					}
 				}
 			}
 			this._collection = nCollection;
 			return this;
 		}
 		
-		public function getAndRemoveByKey(key:Object):nfKeyValueNode {
-			var keyNode:nfKeyValueNode;
-			var nCollection:Vector.<nfKeyValueNode> = new Vector.<nfKeyValueNode>();
-			for each(var kvnode:nfKeyValueNode in this.collection) {
+		public function getAndRemoveByKey(key:Object):IKeyValueNode {
+			var keyNode:IKeyValueNode;
+			var nCollection:Vector.<IKeyValueNode> = new Vector.<IKeyValueNode>();
+			for each(var kvnode:IKeyValueNode in this.collection) {
 				if (kvnode.key != key) {
 					nCollection.push(kvnode);
 				}else {
 					keyNode = kvnode;
+					
+					if (kvnode is ILockable && (kvnode as ILockable).isLocked) {
+						nCollection.push(kvnode);
+					}
 				}
 			}
 			this._collection = nCollection;
@@ -140,7 +153,7 @@
 			if (func is Function) {
 				var length:uint = this.collection.length;
 				for (var i:int = 0; i < length; i++) {
-					var keyNode:nfKeyValueNode = this.collection[i];
+					var keyNode:IKeyValueNode = this.collection[i];
 					func(keyNode, i, length);
 				}
 			}
@@ -154,25 +167,35 @@
 				index = new Array(int(index));
 			}
 			
-			var keyNode:nfKeyValueNode;
+			var keyNode:IKeyValueNode;
 			var removedList:Array = new Array;
-			var nCollection:Vector.<nfKeyValueNode> = new Vector.<nfKeyValueNode>();
+			var nCollection:Vector.<IKeyValueNode> = new Vector.<IKeyValueNode>();
 			var removeIt:Boolean = false;
-			var node:nfKeyValueNode = null;
+			var kvnode:IKeyValueNode = null;
+			var canRemove:Boolean = true;
 			
 			for (var i:int = 0; i < this._collection.length; i++) {
 				removeIt = false;
-				node = this._collection[i];
+				kvnode = this._collection[i];
+				canRemove = true;
 				
-				for each(var removeIndex:int in index) {
-					if (i == removeIndex) {
-						removeIt = true;
-						removedList.push(node);
-						break;
+				if(kvnode is ILockable && (kvnode as ILockable).isLocked) {
+					canRemove = false;
+				}
+				
+				//check list and add to remove list if it the right
+				if(canRemove){
+					for each(var removeIndex:int in index) {
+						if (i == removeIndex) {
+							removeIt = true;
+							removedList.push(kvnode);
+							break;
+						}
 					}
 				}
+				
 				if(!removeIt){
-					nCollection.push(node);
+					nCollection.push(kvnode);
 				}
 			}
 			this._collection = nCollection;
@@ -180,7 +203,7 @@
 		}
 		
 		public function clear():nfKeyValueCollection {
-			this._collection = new Vector.<nfKeyValueNode>();
+			this._collection = new Vector.<IKeyValueNode>();
 			return this;
 		}
 	}

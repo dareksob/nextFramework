@@ -2,8 +2,9 @@ package nextFramework.component
 {
 	
 	/**
+	 * interface for a component object container holder
 	 * @author Darius Sobczak
-	 * @version 1.05 beta
+	 * @version 1.06
 	 */
 	
 	public interface IComponentContainer 

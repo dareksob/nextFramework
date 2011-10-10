@@ -21,7 +21,7 @@ package nextFramework.animation
 					default:
 						var numvalue:Number = parseFloat(value as String);
 						if (numvalue is Number) {
-							nF.addLog('nfAnimationValue.getValue, error type '+type+' not found');
+							nfRegistry.addLog('nfAnimationValue.getValue, error type '+type+' not found');
 						}
 						return numvalue;
 				}
@@ -29,7 +29,7 @@ package nextFramework.animation
 				return value as Number;
 			}
 			
-			nF.addLog('nfAnimationValue.getValue, fatal error the value object is not supported. '+value);
+			nfRegistry.addLog('nfAnimationValue.getValue, fatal error the value object is not supported. '+value);
 			return 0;
 		}
 		
@@ -44,7 +44,7 @@ package nextFramework.animation
 
 				return rand;
 			}
-			nF.addLog('nfAnimationValue.getRandomValue syntax error, '+value);
+			nfRegistry.addLog('nfAnimationValue.getRandomValue syntax error, '+value);
 			return 0;
 		}
 		

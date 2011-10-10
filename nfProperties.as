@@ -5,6 +5,7 @@
 	import flash.utils.getQualifiedClassName;
 	import nextFramework.flash.nfFlashShader;
 	import nextFramework.flash.nfFlashObject;
+	import nextFramework.nfRegistry;
 	
 	/*
 	 * @author Darius Sobczak
@@ -52,7 +53,7 @@
 					}
 				}
 			}catch (error:Error) {
-				nF.addLog(error.message, object);
+				nfRegistry.addLog(error.message, object);
 			}
 			return object;
 		}

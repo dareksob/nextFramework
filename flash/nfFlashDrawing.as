@@ -84,10 +84,10 @@
 								radius.leftTop, radius.rightTop, radius.leftBottom, radius.rightBottom);
 						break;
 					default: 
-						nF.addLog('Drawing type not found: '+conf.type, this);
+						nfRegistry.addLog('Drawing type not found: '+conf.type, this);
 				}
 			}catch (error:Error) {
-				nF.addLog(error.message, this);
+				nfRegistry.addLog(error.message, this);
 			}
 			return this;
 		}

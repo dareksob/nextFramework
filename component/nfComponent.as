@@ -1,35 +1,44 @@
 ﻿package nextFramework.component 
 {
-	import adobe.utils.CustomActions;
-	import flash.display.*;
-	import flash.text.*;
-	import nextFramework.collection.nfKeyValueNode;
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import nextFramework.nF;
-	import nextFramework.component.*;
+	import nextFramework.collection.nfKeyValueNode;
 	import nextFramework.collection.nfKeyValueCollection;
-	import nextFramework.utils.rendering.nfRender;
+	import nextFramework.component.*;
+	import nextFramework.collection.IKeyValueNode;
 	
-	/*
+	/**
+	 * Main Component Design Class
+	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.06
+	 * @version 1.07
 	 */
 	 
-	public class nfComponent
+	public class nfComponent extends EventDispatcher
 	{
+		/**
+		 * singelton contructor
+		 */
 		function nfComponent() {
 			if (!_canCreate) {
 				throw new Error('nfComponent is a singelton class use the instance property');
 			}
 			
-			nfRender.instance.addRender(this.eventUpdateComponents);
+			this.addEventListener(Event.ENTER_FRAME, this.eventUpdateComponents);
 			
 		}
 		static private var _instance:nfComponent = null;
 		static private var _canCreate:Boolean = false;
+		
+		/**
+		 * singelton property
+		 * @return nfComponent
+		 */
 		static public function get instance():nfComponent {
 			if (_instance == null) {
 				nfComponent._canCreate = true;
@@ -39,6 +48,10 @@
 			return nfComponent._instance;
 		}
 		
+		/**
+		 * extend nF Class with component methodes
+		 * @return nfComponent
+		 */
 		static public function init():nfComponent {
 			if (nfComponent._instance is nfComponent) return nfComponent.instance;
 						
@@ -93,7 +106,7 @@
 						if (node is IComponentContainer) {
 							container = (node as IComponentContainer).componentContainer;
 						}else{
-							var kvnode:nfKeyValueNode = _this.collection.getNodeByKey(node);
+							var kvnode:IKeyValueNode = _this.collection.getNodeByKey(node);
 							if (kvnode != null) {
 								container = kvnode.value as nfComponentObjectContainer;
 							}
@@ -114,6 +127,7 @@
 			return nfComponent.instance;
 		}
 		
+		 
 		public function getComponentContainer(object:Object):nfComponentObjectContainer {
 			var container:nfComponentObjectContainer;
 						
@@ -122,12 +136,12 @@
 				container = object.componentContainer as nfComponentObjectContainer;
 			}else {
 				//alternative global containers
-				var kvnode:nfKeyValueNode = this.collection.getNodeByKey(object);
+				var kvnode:IKeyValueNode = this.collection.getNodeByKey(object);
 				
 				if (kvnode == null) {
 					//create global container if not exists
 					container = new nfComponentObjectContainer(object);
-					this.collection.addByValue(object, container);
+					this.collection.add(new nfKeyValueNode(object, container));
 				}else {
 					container = kvnode.value as nfComponentObjectContainer;
 				}
@@ -164,7 +178,7 @@
 		}
 		
 		//event
-		private function eventUpdateComponents(time:Number):nfComponent {
+		private function eventUpdateComponents(event:Event):nfComponent {
 			for each(var node:Function in this.updateCollection) {
 				node();
 			}

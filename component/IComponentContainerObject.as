@@ -2,11 +2,12 @@ package nextFramework.component
 {
 	
 	/**
+	 * interface for component container class
 	 * @author Darius Sobczak
 	 *  @version 1.05 beta
 	 */
 	
-	public interface IComponentContainerObject extends IComponentContainer
+	public interface IComponentContainerObject
 	{
 		function addComponent(comp:Class, conf:Object = null):int;
 		

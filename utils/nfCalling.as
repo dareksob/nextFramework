@@ -1,6 +1,6 @@
 ﻿package nextFramework.utils 
 {
-	import nextFramework.collection.ICollection;
+	import nextFramework.collection.IKeyValueCollection;
 	import nextFramework.collection.nfKeyValueCollection;
 	import nextFramework.collection.nfKeyValueNode;
 	import nextFramework.utils.rendering.nfRender;
@@ -8,14 +8,14 @@
 	 * ...
 	 * @author Darius Sobczak
 	 */
-	public final class nfCalling implements ICollection
+	public final class nfCalling implements IKeyValueCollection
 	{
 		private var _collection:nfKeyValueCollection;
 		public static const MODE_REPEAT:uint = 0x01;
 		public static const MODE_END:uint = 0x02;
 		
 		public function addCall(func:Function, time:Number, mode:uint = nfCalling.MODE_END, key:Object = null):nfCalling {
-			this._collection.addByValue(key, { time: time, func:func, mode: mode } );
+			this._collection.add(new nfKeyValueNode(key, { time: time, func:func, mode: mode }, false));
 			return this;
 		}
 		

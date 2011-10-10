@@ -1,25 +1,28 @@
-package nextFramework.collection  
+﻿package nextFramework.collection  
 {
 	
-	/*
+	/**
+	 * data holder object 
+	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.0 beta
+	 * @version 1.07
 	 */
 	 
-	public final class nfKeyValueNode
+	public final class nfKeyValueNode implements IKeyValueNode, ILockable
 	{
 		
-		public function nfKeyValueNode(key:Object, value:*) 
+		public function nfKeyValueNode(key:Object, value:*, locked:Boolean = false) 
 		{
 			this.key = key;
 			this.value = value;
+			this.lock = value;
 		}
 		
-		/*
+		/**
 		 * key
 		 */
 		private var _key:Object;
@@ -30,7 +33,19 @@ package nextFramework.collection
 			this._key = value; 
 		}
 		
-		/*
+		/**
+		 * lock property
+		 */
+		private var _locked:Boolean;
+		public function get isLocked():Boolean { 
+			return this._locked; 
+		}
+		public function set lock(value:Boolean):void {
+			this._locked = value; 
+		}
+
+		
+		/**
 		 * value
 		 */
 		private var _value:*;

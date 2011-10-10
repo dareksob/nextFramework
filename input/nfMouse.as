@@ -4,7 +4,7 @@
 	import flash.display.Stage;
 	import flash.events.*;
 	import nextFramework.nF;
-	import nextFramework.nfRegisty;
+	import nextFramework.nfRegistry;
 	import nextFramework.translate.nfVector;
 	
 	/*
@@ -201,7 +201,7 @@
 		
 		//init
 		static public function init():void {
-			var stage:Stage = nfRegisty.instance.stage;
+			var stage:Stage = nfRegistry.instance.stage;
 			
 			if(stage){
 				var _this:nfMouse = nfMouse.instance;
@@ -211,7 +211,7 @@
 				stage.addEventListener(MouseEvent.MOUSE_MOVE, _this.eventMouseMove, false, 0, true);
 				stage.addEventListener(Event.MOUSE_LEAVE, _this.eventMouseLeave, false, 0, true);
 			}else {
-				nF.addLog('stage is undefined', nfMouse);
+				nfRegistry.addLog('stage is undefined', nfMouse);
 			}
 		}
 		

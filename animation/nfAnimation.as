@@ -47,27 +47,6 @@ package nextFramework.animation
 			return this;
 		}
 		
-		/*
-		 * remove methodes
-		 müssen noch die animationen geöscht werden
-		public function removeAnimateList(list:Vector.<Object>):nfAnimation
-		{
-			if (conf is Object) {
-				for each(var node:Object in list) {
-					this.removeAnimateObject(node);
-				}
-			}
-			return this;
-		}
-		
-		public function removeObjectAnimation(object:Object):nfAnimation
-		{
-			this.animationCollection.removeByKey(object);
-			return this;
-		}
-		*/
-		
-		
 
 		private function eventAnimationComplete(node:nfAnimationNodeCollection):void {
 			this.animationCollection.removeByValue(node);

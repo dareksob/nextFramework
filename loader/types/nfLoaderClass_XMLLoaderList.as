@@ -1,4 +1,4 @@
-package nextFramework.loader.types
+﻿package nextFramework.loader.types
 {
 	import nextFramework.collection.nfKeyValueCollection;
 	import nextFramework.event.nfLoaderError;
@@ -7,7 +7,7 @@ package nextFramework.loader.types
 	import flash.net.*;
 	import flash.events.*;
 	import flash.display.*;
-	import nextFramework.nF;
+	import nextFramework.nfRegistry;
 	import nextFramework.nfProperties;
 	
 	/*
@@ -50,7 +50,7 @@ package nextFramework.loader.types
 					this._loadList = data.load;
 					this.loadNextNode();
 				}else {
-					nF.addLog('list not exist', this);
+					nfRegistry.addLog('list not exist', this);
 				}
 			}else {
 				super.eventErrorHandler(new nfLoaderError(nfLoaderError.ERROR_WRONGTYPE, false, false));
