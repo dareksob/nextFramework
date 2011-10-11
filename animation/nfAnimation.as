@@ -42,7 +42,7 @@ package nextFramework.animation
 				var node:nfAnimationNodeCollection = new nfAnimationNodeCollection(object, conf);
 					node.onComplete = this.eventAnimationComplete;
 					node.start();
-				this.animationCollection.addByValue(object, node);
+				this.animationCollection.add(new nfKeyValueNode(object, node));
 			}
 			return this;
 		}

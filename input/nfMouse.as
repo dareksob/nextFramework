@@ -130,7 +130,7 @@
 				this._isLeftPressed = event.delta == 0 ? true : false;
 				this._isRightPressed = event.delta == 1 ? true : false;
 				this._mousePositionMouseDown = new nfVector(event.stageX, event.stageY);
-				this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, 'mouseDown'));
+				this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, 'mouseDown'), event);
 			}
 		}
 		protected function eventMouseClick(event:MouseEvent):void 
@@ -140,7 +140,8 @@
 				this._isLeftPressed = false;
 				this._isRightPressed = false;
 				this._mousePositionMouseUp = new nfVector(event.stageX, event.stageY);
-				this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, 'click'));
+				
+				this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, 'click'), event);
 			}
 		}
 		
@@ -148,7 +149,7 @@
 		{
 			if (this.isActivate()) {
 				this._isPressed = false;
-				this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, 'doubleClick'));
+				this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, 'doubleClick'), event);
 			}
 		}
 		
@@ -156,7 +157,7 @@
 		{
 			if (this.isActivate()) {
 				if (!this._isOver) {
-					this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, 'over'));
+					this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, 'over'), event);
 				}
 				this._isOver = true;
 				this._mousePosition = new nfVector(event.stageX, event.stageY);
@@ -164,9 +165,9 @@
 				this._delta = event.delta;
 
 				if (event.buttonDown) {
-					this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, 'move+mouseDown'));
+					this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, 'move+mouseDown'), event);
 				}else {
-					this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, 'move'));
+					this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, 'move'), event);
 				}
 			}
 		}
@@ -175,7 +176,7 @@
 		{
 			if(this.isActivate()){
 				this._isOver = false;
-				this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, 'out'));
+				this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, 'out'), event);
 			}
 		}
 		
@@ -203,7 +204,7 @@
 		static public function init():void {
 			var stage:Stage = nfRegistry.instance.stage;
 			
-			if(stage){
+			if (stage) {
 				var _this:nfMouse = nfMouse.instance;
 				stage.addEventListener(MouseEvent.MOUSE_DOWN, _this.eventMouseDown, false, 0, true);
 				stage.addEventListener(MouseEvent.CLICK, _this.eventMouseClick, false, 0, true);

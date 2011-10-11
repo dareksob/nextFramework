@@ -11,7 +11,7 @@
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.06
+	 * @version 1.07
 	 */
 	 
 	public class nfKeyboard
@@ -19,10 +19,15 @@
 		static public const KEY_DOWN:String = KeyboardEvent.KEY_DOWN;
 		static public const KEY_UP:String = KeyboardEvent.KEY_UP;
 		
+		/**
+		 * todo return keycodes for keyboard
+		 * 
+		 * @param	value
+		 * @return	string
+		 */
 		static public function getKeyCode(value:*):String {
 			if (value is String) {
-				
-				//!!!!!!
+
 			}
 			return value.toString();
 		}
@@ -103,16 +108,16 @@
 				this._shiftKey = event.shiftKey;
 				this._altKey = event.altKey;
 				
-				this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, nfKeyboard.KEY_DOWN + ' ' + this._charCode));
-				this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, nfKeyboard.KEY_DOWN));
+				this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, nfKeyboard.KEY_DOWN + ' ' + this._charCode), event);
+				this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, nfKeyboard.KEY_DOWN), event);
 			}
 		}
 		protected function eventKeyUp(event:KeyboardEvent):void 
 		{
 			if (this.isActivate()) {
 				this._keyDown = false;
-				this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, nfKeyboard.KEY_UP + ' ' + this._charCode));
-				this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, nfKeyboard.KEY_UP));
+				this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, nfKeyboard.KEY_UP + ' ' + this._charCode), event);
+				this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, nfKeyboard.KEY_UP), event);
 			}
 		}
 		

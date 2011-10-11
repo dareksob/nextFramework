@@ -1,6 +1,7 @@
-package nextFramework.animation
+﻿package nextFramework.animation
 {
 	import nextFramework.nF;
+	import nextFramework.nfRegistry;
 	
 	/*
 	 * @author Darius Sobczak

@@ -1,5 +1,6 @@
 ﻿package nextFramework.input 
 {
+	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	
@@ -9,7 +10,7 @@
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.0 beta
+	 * @version 1.07
 	 */
 	 
 	public final class nfKeyMapping
@@ -24,7 +25,7 @@
 			
 			if (event is MouseEvent || event is KeyboardEvent) {
 
-				//keyboardLocation !! 
+				/** todo keyboard location */
 				var keyList:Array = new Array;
 				if(event.shiftKey){
 					keyList.push('shift');
@@ -44,9 +45,10 @@
 			return keyCode;
 		}
 		
-		public function callAllKeyMaps(keyValue:String):nfKeyMapping {
+		public function callAllKeyMaps(keyValue:String, event:Event):nfKeyMapping {
 			var list:Vector.<nfKeyMappingNode> = this.getKeyMapList(keyValue);
 			for each(var keyNode:nfKeyMappingNode in list) {
+				keyNode._event = event;
 				keyNode.call();
 			}
 			return this;

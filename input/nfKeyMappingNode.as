@@ -1,5 +1,6 @@
 ﻿package nextFramework.input 
 {
+	import flash.events.Event;
 	
 	/*
 	 * @author Darius Sobczak
@@ -29,6 +30,14 @@
 		}
 		public function set keyvalue(value:String) {
 			this._keyvalue = value; 
+		}
+		
+		/*
+		 * event
+		 */
+		internal var _event:Event = null;
+		public function get event():Event { 
+			return this._event; 
 		}
 		
 		/*
