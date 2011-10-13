@@ -17,9 +17,9 @@
 		
 		public function nfKeyValueNode(key:Object, value:*, locked:Boolean = false) 
 		{
-			this.key = key;
-			this.value = value;
-			this.lock = value;
+			this._key = key;
+			this._value = value;
+			this._locked = locked;
 		}
 		
 		/**
