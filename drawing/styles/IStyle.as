@@ -1,8 +1,10 @@
-﻿package nextFramework.drawing.style 
+﻿package nextFramework.drawing.styles
 {
 	import flash.display.Graphics;
 	
-	/*
+	/**
+	 * interface for style operations
+	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
@@ -11,9 +13,9 @@
 	 * @version 1.0 beta
 	 */
 	 
-	public interface IFillStyle 
+	public interface IStyle 
 	{
-		function beginFill(graphics:Graphics):void;
+		function setStyle(graphics:Graphics):void;
 	}
 	
 }

@@ -4,7 +4,7 @@
 	import flash.display.GraphicsPathCommand;
 	import flash.geom.Point;
 	
-	/*
+	/**
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
@@ -15,18 +15,22 @@
 	 
 	public class nfDrawingData
 	{				
-		/*
-		 * @added since: 1.05b
+		/**
+		 * 
+		 * @since	1.05b
+		 * @param	conf
+		 * @param	firstMove
 		 */
-		public function setLines(conf:Array, firstMove:Boolean = true) {
+		public function setLines(conf:Array, firstMove:Boolean = true):nfDrawingData {
 			for (var i:int = 0; i < conf.length; i++ ) {
-				var params = conf[i];
+				var params:Object = conf[i];
 				if (i == 0 && firstMove) {
 					this.moveTo(params.x as Number, params.y as Number);
 				}else {
 					this.lineTo(params.x as Number, params.y as Number);
 				}
 			}
+			return this;
 		}
 		
 		public function curveTo(controlX:Number, controlY:Number, x:Number, y:Number):nfDrawingData {
@@ -136,9 +140,6 @@
 			var _this:nfDrawingData = new nfDrawingData();
 			return _this.moveTo(point1.x, point1.y).lineTo(point2.x, point2.y);
 		}
-		
-		
-		
 	}
 
 }

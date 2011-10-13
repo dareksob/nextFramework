@@ -43,7 +43,7 @@ package nextFramework.drawing
 		/*
 		 *  add nodes to renderlist
 		 */
-		public function addNode(node:nfScreenNode, cache:Boolean = false) {
+		public function addNode(node:nfScreenNode, cache:Boolean = false):nfScreen {
 			node._parent = this;
 			
 			if (cache){
@@ -108,7 +108,7 @@ package nextFramework.drawing
 				
 				//render all nodes for cache
 				for each(node in this._cacheNodes) {
-					this._cacheBitmap.draw(node.bitmapData, node.translate.matrix);
+					this._cacheBitmap.draw(node.bitmapData, node._translate.matrix);
 				}
 
 				this._updateCache = false;
@@ -121,7 +121,7 @@ package nextFramework.drawing
 			
 			//transform by scrolling
 			var mat:Matrix = new Matrix;
-			mat.translate(this.cutting.position.x, this.cutting.position.y);
+			mat._translate(this.cutting.position.x, this.cutting.position.y);
 			
 			///draw cache
 			display.draw(this._cacheBitmap, mat);
@@ -130,8 +130,8 @@ package nextFramework.drawing
 			 * render dynamic objects
 			 */
 			for each(node in this._nodes) {
-				var matNode:Matrix = node.translate.matrix;
-				matNode.translate(this.cutting.position.x, this.cutting.position.y);
+				var matNode:Matrix = node._translate.matrix;
+				matNode._translate(this.cutting.position.x, this.cutting.position.y);
 				
 				//update if have to
 				if (node is IRenderUpdate) {

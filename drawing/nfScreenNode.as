@@ -11,18 +11,29 @@ package nextFramework.drawing
 	public class nfScreenNode implements ITranslate
 	{
 		internal var _bitmapData:BitmapData = null;
-		public var translate:nfTranslate = new nfTranslate;
 		internal var _parent:nfScreen = null;
+		internal var _translate:nfTranslate = null;
+		
 		public var name:String = '';
+		
 		
 		public function nfScreenNode(bitmapdata:BitmapData) 
 		{
 			this._bitmapData = bitmapdata;
+			this._translate = new nfTranslate;
 		}
 		
 		public function get bitmapData():BitmapData {
 			return this._bitmapData;
-		}		
+		}
+		
+		public function get translate():nfTranslate {
+			return this.translate;
+		}
+		public function set translate(value:nfTranslate):void {
+			this.translate = value;
+		}
+		
 	}
 
 }
