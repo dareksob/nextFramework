@@ -135,7 +135,7 @@ package nextFramework.drawing
 				
 				//update if have to
 				if (node is IRenderUpdate) {
-					(node as IRenderUpdate).renderUpdate(time);
+					(node as IRenderUpdate).update(time);
 				}
 				
 				display.draw(node.bitmapData, matNode);
