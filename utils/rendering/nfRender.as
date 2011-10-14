@@ -6,14 +6,27 @@
 	import flash.utils.getTimer;
 	import flash.utils.Timer;
 
-	public class nfRender
+	/**
+	 * rendering class, call updates
+	 * 
+	 * @author Darius Sobczak
+	 * @website dsobczak.de
+	 * @mail mail@dsobczak.de
+	 *
+	 * @website nextframework.de
+	 * @version 1.05 beta
+	 */
+	 
+	public final class nfRender
 	{
 		private var _timer:Timer;
 		private var _lastTimer:uint = 0;
 		private var _lastRenderTime:Number = 0;
 		
 		
-		
+		/**
+		 * singelton constructor class
+		 */
 		public function nfRender():void{
 			if (!_canCreate) {
 				throw new Error('nfRender is a singelton class use the instance property');
@@ -36,14 +49,14 @@
 		}
 		
 		
-		/*
+		/**
 		 * return the last rendering time
 		 */
 		public function get lastRenderTime():Number {
 			return this._lastRenderTime;
 		}
 		
-		/*
+		/**
 		 * main render methode
 		 */
 		private function update(event:TimerEvent):void{
@@ -60,10 +73,23 @@
 		}
 		
 		private var _renderList:Vector.<Function> = new Vector.<Function>();
+		
+		/**
+		 * add function to rendering pipeline
+		 * 
+		 * @param	func
+		 * @return	nfRender
+		 */
 		public function addRender(func:Function):nfRender {
 			this._renderList.push(func);
 			return this;
 		}
+		
+		/**
+		 * remove the function of rendering pipeline
+		 * @param	func
+		 * @return	nfRender
+		 */
 		public function removeRender(func:Function):nfRender {
 			var tempList:Vector.<Function> = new Vector.<Function>();
 			for each(var funcNode:Function in _renderList) {

@@ -54,7 +54,7 @@
 				}
 			}
 			
-			this._collection.removeByIndex(removeIndices);
+			this._collection.removeByIndices(removeIndices);
 		}
 		
 		

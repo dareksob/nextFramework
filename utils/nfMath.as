@@ -1,8 +1,6 @@
 package nextFramework.utils
 {
-	import flash.geom.Point;
-	
-	/*
+	/**
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
@@ -47,7 +45,7 @@ package nextFramework.utils
 			return value;
 		}
 		
-		static public function randomMinMax(min:Number, max:Number){
+		static public function randomMinMax(min:Number, max:Number):Number {
 			return Math.random()*(max - min) + min;
 		}
 	}

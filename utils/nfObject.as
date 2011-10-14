@@ -98,17 +98,31 @@
 		 * @return	true if its was successful, false if not
 		 */
 		static public function setProps(object:Object, conf:Object):Boolean {
+			var result:Boolean = true;
 			for (var prop:String in conf) {
 				if(object.hasOwnProperty(prop)){
-					try {
-						object[prop] = conf[prop];
-					}catch (error:Error) {
-						return false;
-					}
+					object[prop] = conf[prop];
+				}else{
+					result = false;
 				}
 			}
-			return true;
+			return result;
 		}
+		
+		
+		static public function setPropsByDefault(object:Object, conf:Object, propList:Array):void {
+			for each(var prop:String in propList) {
+				if (conf.hasOwnProperty(prop)) {
+					if(!object.hasOwnProperty(prop)){
+						object[prop] = conf[prop];
+					}else if(object[prop] == null || isNaN(object[prop])){
+						object[prop] = conf[prop];
+					}
+					
+				}
+			}
+		}
+		
 	}
 
 }
