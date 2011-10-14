@@ -62,7 +62,6 @@
 				if(addNode){
 					//add to loaderlist
 					if (loaderNode.name) {
-						
 						this.loaderList.push(loaderNode);
 					}
 
@@ -135,17 +134,17 @@
 			return null;
 		}
 		
-		// @addedsince: 1.04b
+		/** @since: 1.04b */
 		public function getLoaderByName(name:String):nfLoaderNode {
 			return this.getLoader( { name: name } );
 		}
 		
-		// @addedsince: 1.04b
+		/** @since: 1.04b */
 		public function getLoaderByUrl(url:String):nfLoaderNode {
 			return this.getLoader( { url: url } );
 		}
 		
-		// @addedsince: 1.05b
+		/** @since: 1.05b */
 		public function removeLoader(conf:Object):Boolean {
 
 			var index:int = this.getLoaderIndex(conf);
@@ -155,12 +154,12 @@
 			}
 			return false;
 		}
-		// @addedsince: 1.04b
+		/** @since: 1.04b */
 		public function removeLoaderByName(name:String):Boolean {
 			return this.removeLoader( { name: name } );
 		}
 		
-		// @addedsince: 1.04b
+		/** @since: 1.04b */
 		public function removeLoaderByUrl(url:String):Boolean  {
 			return this.removeLoader( { url: url } );
 		}
