@@ -1,10 +1,12 @@
 ﻿package nextFramework.translate 
 {
 	import flash.geom.Matrix;
+	
 	/**
 	 * ...
 	 * @author Darius Sobczak
 	 */
+	
 	public class nfTranslate 
 	{
 		public const DEGREES_TO_RADIANS:Number = 2 * Math.PI;

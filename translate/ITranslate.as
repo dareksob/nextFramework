@@ -7,8 +7,8 @@
 	 */
 	public interface ITranslate 
 	{
-		function get transform():nfTranslate;
-		function set transform(value:nfTranslate):void;
+		function get translate():nfTranslate;
+		function set translate(value:nfTranslate):void;
 	}
 	
 }
