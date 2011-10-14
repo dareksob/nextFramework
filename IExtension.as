@@ -1,7 +1,9 @@
 ﻿package nextFramework 
 {
 
-	/*
+	/**
+	 * Interface for extenable plugins of nextFramework nf
+	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
