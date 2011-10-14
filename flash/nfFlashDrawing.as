@@ -1,8 +1,10 @@
 ﻿package nextFramework.flash 
 {
 	import flash.display.Graphics;
-	import nextFramework.nF;
-	/*
+	import nextFramework.nfRegistry;
+	
+	/**
+	 * drawing class for default flash operations
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
@@ -19,11 +21,13 @@
 		static public const DRAW_RECTROUND:String = 'rectRound';
 		static public const DRAW_RECTROUNDCOMPLEX:String = 'rectRoundComplex';
 		
-		static public function create() {
-			return new nfFlashDrawing;
-		}
-		
-		public function draw(graphics:Graphics, conf:Object):nfFlashDrawing {
+		/**
+		 * drawing method
+		 * 
+		 * @param	graphics:Graphics
+		 * @param	conf:Object
+		 */
+		public function draw(graphics:Graphics, conf:Object):void {
 			try {
 				if (!(conf.x is Number)) conf.x = 0;
 				if (!(conf.y is Number)) conf.y = 0;
@@ -40,8 +44,7 @@
 				
 				
 				var radius:Object;
-				
-				switch(conf.type) {
+				switch(conf.shape) {
 					case DRAW_CIRCLE: 
 							graphics.drawCircle(conf.x, conf.y, conf.radius);
 						break;
@@ -89,7 +92,6 @@
 			}catch (error:Error) {
 				nfRegistry.addLog(error.message, this);
 			}
-			return this;
 		}
 		
 	}
