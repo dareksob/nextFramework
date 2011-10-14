@@ -1,7 +1,9 @@
 package nextFramework.component 
 {
 	
-	/*
+	/**
+	 * base class for components
+	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
@@ -13,18 +15,30 @@ package nextFramework.component
 	public class nfComponentObject implements IComponentObject
 	{
 		
-		function nfComponentObject(container:nfComponentObjectContainer, object:Object, name:String = "") 
-		{
+		function nfComponentObject(container:nfComponentObjectContainer, object:Object, name:String = "") {
 			this._container = container;
 			this._object = object;
 			this.name = name;
 		}
-		
+		/**
+		 * it will be call if the component its added
+		 * optional method to overide
+		 */
 		public function added():void { }
+		
+		/**
+		 * it will be call if the component its removed
+		 * optional method to overide
+		 */
 		public function removed():void { }
+		
+		/**
+		 * method for init your element, call only one time
+		 * optional method to overide
+		 */
 		public function init(conf:Object):void {}
 		
-		/*
+		/**
 		 * name of componentobject 
 		 */
 		private var _name:String = "";
@@ -35,7 +49,7 @@ package nextFramework.component
 			this._name = value; 
 		}
 		
-		/*
+		/**
 		 * object
 		 */
 		private var _object:*;
@@ -43,7 +57,7 @@ package nextFramework.component
 			return this._object; 
 		}
 		
-		/*
+		/**
 		 * container
 		 */
 		private var _container:nfComponentObjectContainer;
