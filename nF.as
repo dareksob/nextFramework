@@ -240,9 +240,9 @@
 		 */
 		public function arrange(conf:Object = null):nF {
 			if (conf && conf.mode == 'table') {
-				nfTableArrange(new nfTableArrange(conf)).arrangeList(this.selection);
+				(new nfTableArrange(conf)).positionObjects(this._selection);
 			}else{
-				nfArrange(new nfArrange(conf)).arrangeList(this.selection);
+				nfArrange(new nfArrange(conf)).positionObjects(this._selection);
 			}
 			return this;
 		}
