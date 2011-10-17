@@ -10,7 +10,9 @@
 	import nextFramework.nfRegistry;
 	import nextFramework.nfProperties;
 	
-	/*
+	/**
+	 * load elements by xml data, first it load the xml document after that it load all elements
+	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
