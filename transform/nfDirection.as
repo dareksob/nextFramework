@@ -1,22 +1,19 @@
 package nextFramework.transform 
 {
 	
-	/*
+	/**
+	 * Enumeration class for direction x, y or xy;
+	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.0 beta
+	 * @version 1.07
 	 */
 	 
 	public final class nfDirection
 	{
-		
-		public function nfDirection(value:String = 'x') 
-		{
-			this.value = value;
-		}
 		
 		/*
 		 * direction const
@@ -25,31 +22,24 @@ package nextFramework.transform
 		public static const Y:String = 'y';
 		public static const XY:String = 'xy';
 		
-		/*
-		 * direction
+		/**
+		 * helper method to set the right value
+		 * 
+		 * @param	value
+		 * @param	bothAllowed, if XY is allowed
+		 * @return	String
 		 */
-		private var _value:String;
-		public function get value():String { 
-			return this._value; 
-		}
-		public function set value(value:String):void {
+		static public function getValue(value:Object, bothAllowed:Boolean = true):String {
 			switch(value) {
 				case XY:
-					this._value = XY; 
-					break;
+					if(bothAllowed){
+						return XY; 
+					}
 				case Y:
-					this._value = Y; 
-					break;
-				case X:
-				default: 
-					this._value = X; 
+					return Y;				
 			}
+			return "x";
 		}
-		
-		public function toString():String {
-			return this.value;
-		}
-		
 	}
 
 }

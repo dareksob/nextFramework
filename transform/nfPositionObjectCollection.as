@@ -3,7 +3,7 @@
 	import flash.geom.Point;
 	import nextFramework.transform.nfPositionObject;
 	
-	/*
+	/**
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
@@ -15,17 +15,16 @@
 	public class nfPositionObjectCollection
 	{		
 		public function push(positionobject:nfPositionObject):int {
-			return this._list.push(positionobject);
+			return this._collection.push(positionobject);
 		}
 		public function pushByValue(object:Object, position:Point):int {
-			return this._list.push(new nfPositionObject(object, position));
+			return this._collection.push(new nfPositionObject(object, position));
 		}
 		
 		public function objectToPosition(direction:String):void {
 
-			for each(var node:nfPositionObject in this.list) {
-				var nfdirection:nfDirection = new nfDirection(direction);
-				switch(nfdirection.value) {
+			for each(var node:nfPositionObject in this.collection) {
+				switch(direction) {
 					case nfDirection.X: 
 						node.setObjectToPosition(true, false); 
 						break;
@@ -39,9 +38,9 @@
 			}
 		}
 		
-		private var _list:Vector.<nfPositionObject> = new Vector.<nfPositionObject>();
-		public function get list():Vector.<nfPositionObject> { 
-			return this._list; 
+		private var _collection:Vector.<nfPositionObject> = new Vector.<nfPositionObject>();
+		public function get collection():Vector.<nfPositionObject> { 
+			return this._collection; 
 		}
 		
 	}

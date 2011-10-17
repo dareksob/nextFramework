@@ -1,11 +1,14 @@
-package nextFramework.transform 
+﻿package nextFramework.transform 
 {
-	import nextFramework.nfProperties;
 	import flash.display.DisplayObject;
-	import nextFramework.utils.nfBoxPoints;
 	import flash.geom.Point;
+	import nextFramework.transform.nfPositionObjectCollection;
+	import nextFramework.translate.nfSize;
+	import nextFramework.utils.nfBoxPoints;
 	
-	/*
+	/**
+	 * @todo spacing is the width and height
+	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
@@ -14,47 +17,63 @@ package nextFramework.transform
 	 * @version 1.06
 	 */
 	
-	public final class nfTableArrange
+	public class nfTableArrange extends nfArrange
 	{
 		
 		function nfTableArrange(conf:Object = null) {
-			nfProperties.setObjectProperties(this, conf);
+			super(conf);
 		}
 		
-		public function arrangeList(list:Vector.<Object>):nfTableArrange {
-			this.getPositionCollection(list).objectToPosition(nfDirection.XY);
+		/**
+		 * set the nfPositionObjectCollection to this list
+		 * @param	list
+		 * @return	nfTableArrange
+		 */
+		override public function positionObjects(list:Vector.<Object>):* 
+		{
+			this.getPositionObjectCollection(list).objectToPosition(nfDirection.XY);
 			return this;
 		}
 		
-		public function getPositionCollection(list:Vector.<Object>):nfPositionObjectCollection {			
+		/**
+		 * return a nfPositionObjectCollection based by the table datas
+		 * @param	list
+		 * @return	nfPositionObjectCollection
+		 */
+		override public function getPositionObjectCollection(list:Vector.<Object>):nfPositionObjectCollection 
+		{
 			var position:Point = new Point;
 			var positionCollection:nfPositionObjectCollection = new nfPositionObjectCollection;
+
+			var cellNum:int = 1;
+			var invertDirection:String = this._direction == "x" ? "y" : "x";
 			
-			var paraDirection:String = 'y';
-			if (this.direction == 'y') { //direction by y
-				paraDirection = 'x';
+			if (!this._cellSize) {
+				this._cellSize = new nfSize;
 			}
-			
-			var cellCount:int = 0;
-			
+
 			for (var index:int = 0; index < list.length; index++) {
-				var node:DisplayObject = list[index] as DisplayObject;
+				var node:Object = list[index];
 				
-				if (node) {
-					var boxPoints:nfBoxPoints = new nfBoxPoints(node);
+				if (node is DisplayObject) {
 					var offsetPosition:Point = position.clone();
-					
+					var boxPoints:nfBoxPoints = new nfBoxPoints(node);
+					var boxSize:nfSize = new nfSize(boxPoints.width, boxPoints.height);
+
 					offsetPosition = offsetPosition.subtract(nfAlignPosition.getPointByBoxPoint(this._alignPosition, boxPoints));
+					offsetPosition = offsetPosition.add(this.offset as Point);
 					
 					positionCollection.pushByValue(node, offsetPosition);
-					
-					if (cellCount >= this._cells) {
-						cellCount = 0;
-						position[paraDirection] += this._spacing[paraDirection];
+			
+					if (cellNum >= this._cellCount) {
+						trace(cellNum);
+						position[invertDirection] += this._cellSize.getByAxis(invertDirection) + this._spacing[invertDirection];
 						position[this._direction] = 0;
+						cellNum = 1;
 					}else {
-						position[this._direction] += this._spacing[this._direction];
-						cellCount++;
+						
+						position[this._direction] += this._cellSize.getByAxis(this._direction) + this._spacing[this._direction];
+						cellNum++;
 					}
 				}
 				
@@ -62,54 +81,37 @@ package nextFramework.transform
 			return positionCollection;
 		}
 		
-		/*
-		 * spacing
+				
+		/**
+		 * cell count for one direction
 		 */
-		private var _spacing:Point = new Point();
-		public function get spacing():Point { 
-			return this._spacing; 
+		private var _cellCount:int = 5;
+		public function get cellCount():int { 
+			return this._cellCount; 
 		}
-		public function set spacing(value:Point):void {
-			this._spacing = value; 
-		}
-		public function set spacingX(value:Number):void {
-			this._spacing.x = value; 
-		}
-		public function set spacingY(value:Number):void {
-			this._spacing.y = value; 
+		public function set cellCount(value:int):void {
+			this._cellCount = value;
 		}
 		
 		/*
 		 * cells
 		 */
-		private var _cells:int = 5;
-		public function get cells():int { 
-			return this._cells; 
+		private var _cellSize:Object = null;
+		public function get cellSize():Object { 
+			return this._cellCount; 
 		}
-		public function set cells(value:int):void {
-			this._cells = value;
-		}
-		
-		
-		/*
-		 * direction
-		 */
-		private var _direction:String = 'x';
-		public function get direction():String { 
-			return this._direction; 
-		}
-		public function set direction(value:String):void {
-			if (value == 'x') {
-				this._direction = 'x';
-			}else{
-				this._direction = 'y';
+		public function set cellSize(value:Object):void {
+			if (value is Number) {
+				_cellSize = new nfSize(Number(value), Number(value));
+			}else {
+				_cellSize = (new nfSize()).setOptions(value);
 			}
 		}
 		
 		/*
 		 * alignPosition
 		 */
-		private var _alignPosition:String = 'center';
+		private var _alignPosition:String = 'absLeftTop';
 		public function get alignPosition():String { 
 			return this._alignPosition; 
 		}

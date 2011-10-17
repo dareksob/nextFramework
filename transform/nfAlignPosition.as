@@ -3,13 +3,14 @@
 	import flash.geom.Point;
 	import nextFramework.utils.nfBoxPoints;
 	
-	/*
+	/**
+	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.05 beta
+	 * @version 1.07
 	 */
 	public class nfAlignPosition
 	{
@@ -34,7 +35,9 @@
 		public static const CENTERBOTTOM:String = 'centerBottom';
 		public static const RIGHTBOTTOM:String = 'rightBottom';
 		
-		/*
+		public static const ABSLEFTTOP:String = 'absLeftTop';
+		
+		/**
 		 * value
 		 */
 		private var _value:String;
@@ -42,40 +45,7 @@
 			return this._value; 
 		}
 		public function set value(value:String):void {
-			switch(value) {
-				case LEFTTOP:
-					this._value = LEFTTOP; 
-					break;
-				case CENTERTOP:
-					this._value = CENTERTOP; 
-					break;
-				case RIGHTTOP:
-					this._value = RIGHTTOP; 
-					break;
-					
-				case LEFTCENTER:
-					this._value = LEFTCENTER; 
-					break;
-				case CENTER:
-					this._value = CENTER; 
-					break;
-				case RIGHTCENTER:
-					this._value = RIGHTCENTER; 
-					break;
-					
-				case LEFTBOTTOM:
-					this._value = LEFTBOTTOM; 
-					break;
-				case CENTERBOTTOM:
-					this._value = CENTERBOTTOM; 
-					break;
-				case RIGHTBOTTOM:
-					this._value = RIGHTBOTTOM; 
-					break;
-					
-				default: 
-					this._value = LEFTTOP; 
-			}
+			this._value = value;
 		}
 		
 		public static function getPointByBoxPoint(align:String, boxpoint:nfBoxPoints):Point {
@@ -102,6 +72,9 @@
 					return new Point(boxpoint.centerPoint.x, boxpoint.leftBottom.y);
 				case RIGHTBOTTOM:
 					return boxpoint.rightBottom;
+					
+				case ABSLEFTTOP:
+					return boxpoint.absLeftTop;
 			}
 			return new Point();
 		}
