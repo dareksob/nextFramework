@@ -122,6 +122,10 @@
 			this._property = value;
 		}
 		
+		public function toString():String {
+			return "Tween Relative" + " start:" + this.start + " end:" + this.end + " time:" + this.time + " duration:" + this.duration+ " property:"+ this._property;
+		}
+		
 	}
 
 }

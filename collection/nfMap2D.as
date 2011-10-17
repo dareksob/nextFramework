@@ -1,6 +1,6 @@
 package nextFramework.collection 
 {
-	/*
+	/**
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de

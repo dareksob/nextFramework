@@ -23,7 +23,7 @@
 		private var _tweensCollection:nfKeyValueCollection;
 		
 		/** default config */
-		static private var defaultCombineConfArray:Array = ["duration", "easing", "type"];
+		static private var defaultCombineConfArray:Array = ["duration", "easing", "type", "delay"];
 				
 		/** default setting easing */
 		static public var defaultEasing:Function = Quadratic.easeOut;
@@ -50,22 +50,14 @@
 		 * @param	conf
 		 */
 		public function add(conf:Object):nfTimeline {
-			//try {
+			try {
 				var duration:Number = isNaN(conf.duration) ? 0 : conf.duration;
 				var longestTween:ITween;
 				
 				//set default configuration object
-				var defaultConfiguration:Object = {
-					easing: nfTimeline.defaultEasing
-				};
+				var defaultConfiguration:Object = this.getDefaultConfiguration(conf);
 				
-				nfObject.setPropsByDefault(
-					defaultConfiguration, 
-					conf,
-					nfTimeline.defaultCombineConfArray
-				);
-				
-				for (var key:Object in conf.props) {
+				for (var key:String in conf.props) {
 			
 					//object have to have the property
 					if (!this.target.hasOwnProperty(key)) {
@@ -73,21 +65,10 @@
 					}
 					
 					//set default configuration object for tween 
-					var propconf:Object = conf.props[key];
-					if (propconf is Number) {
-						propconf = { end: propconf };
-					}
-					
-					nfObject.setPropsByDefault(
-						propconf, 
-						defaultConfiguration,
-						nfTimeline.defaultCombineConfArray
-					);
-					propconf.target = this.target;
-					propconf.property = key;
+					var propconf:Object = this.getTweenConfiguration(key, conf.props[key], defaultConfiguration);
 					
 					var tween:ITween = nfTweenFactory.factory(propconf);
-
+					
 					this._tweensCollection.add(new nfKeyValueNode(key, tween));
 					
 					//set longest tween
@@ -103,15 +84,49 @@
 					longestTween.addEventListener(nfTweenEvents.EVENT_COMPLETE, conf.onComplete);
 				}
 				
-			//}catch (error:Error) {
-			//	throw new Error("Timeline configuration object is not correct, "+error.message);
-			//}
+			}catch (error:Error) {
+				throw new Error("Timeline configuration object is not correct, "+error.message);
+			}
 			return this;
+		}
+		
+		/**
+		 * setup the default configuration object
+		 * @param	conf
+		 * @return	Object
+		 */
+		private function getDefaultConfiguration(conf:Object):Object {
+			var defaultConf:Object = {
+				easing: nfTimeline.defaultEasing,
+				delay: 0
+			};
+			nfObject.setPropsByDefault(
+				defaultConf,
+				conf,
+				nfTimeline.defaultCombineConfArray
+			);
+			return defaultConf;
+		}
+		
+		private function getTweenConfiguration(key:String, conf:Object, defaultConf:Object):Object {
+			var tweenConf:Object = conf;
+			if (tweenConf is Number) {
+				tweenConf = { end: conf };
+			}
+			
+			nfObject.setPropsByDefault(
+				tweenConf, 
+				defaultConf,
+				nfTimeline.defaultCombineConfArray
+			);
+			tweenConf.target = this.target;
+			tweenConf.property = key;
+			return tweenConf;
 		}
 		
 		public function stop(conf:Object = null):nfTimeline {
 			this.activate = false;
-			//todo conf
+			// @todo conf
 			return this;
 		}
 		
