@@ -9,7 +9,8 @@
 	import nextFramework.nfProperties;
 	import nextFramework.utils.nfBoxPoints;
 	
-	/*
+	/**
+	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
