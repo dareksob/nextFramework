@@ -4,7 +4,9 @@
 	import nextFramework.nfRegistry;
 	import nextFramework.loader.types.*;
 	
-	/*
+	/**
+	 * loader class 
+	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
@@ -27,12 +29,13 @@
 			nfLoaderClass_Display.init();
 			nfLoaderClass_Text.init();
 			nfLoaderClass_TextField.init();
-			nfLoaderClass_Binary.init();
-			nfLoaderClass_XMLLoaderList.init();
 			
 			this.reset();
 		}
 		
+		/**
+		 * return this instance
+		 */
 		static public function get instance():nfLoader {
 			if (_instance == null) {
 				nfLoader._canCreate = true;
@@ -42,7 +45,7 @@
 			return nfLoader._instance;
 		}
 		
-		/*
+		/**
 		 * loader methode
 		 */
 		public function load(type:String, url:Object, conf:Object = null):ILoaderClass {
@@ -73,7 +76,12 @@
 			}
 			return null;
 		}
-
+		
+		/**
+		 * add loader by array
+		 * @param	list
+		 * @return	Boolean return true if all loader can added
+		 */
 		public function loadList(list:Array):Boolean {
 			var completeAdded:Boolean = true;
 			for each(var node:Object in list) {
@@ -84,8 +92,8 @@
 			return completeAdded;
 		}
 		
-		/*
-		 * checkDublicate
+		/**
+		 * check dublicates
 		 */
 		private var _checkDublicate:Boolean = true;
 		public function get checkDublicate():Boolean { 
@@ -95,19 +103,27 @@
 			this._checkDublicate = value; 
 		}
 		
-		/*
+		/**
 		 * loaderlist
 		 */
 		private var _loaderList:Vector.<nfLoaderNode>;
 		public function get loaderList():Vector.<nfLoaderNode> { 
 			return this._loaderList; 
 		}
+		
+		/**
+		 * remove all loader
+		 * @return	nfLoader
+		 */
 		public function reset():nfLoader {
 			this._loaderList = new Vector.<nfLoaderNode>();
 			return this;
 		}
 		
-		// @addedsince: 1.05b
+		/** 
+		 * get a Loader by index
+		 * since: 1.04b 
+		 */
 		public function getLoaderIndex(conf:Object):int {
 			if (!(conf is Array)) {
 				conf = new Array(conf);
@@ -134,17 +150,26 @@
 			return null;
 		}
 		
-		/** @since: 1.04b */
+		/** 
+		 * get a Loader by name
+		 * since: 1.04b 
+		 */
 		public function getLoaderByName(name:String):nfLoaderNode {
 			return this.getLoader( { name: name } );
 		}
 		
-		/** @since: 1.04b */
+		/** 
+		 * get a Loader By Url
+		 * since: 1.04b 
+		 */
 		public function getLoaderByUrl(url:String):nfLoaderNode {
 			return this.getLoader( { url: url } );
 		}
 		
-		/** @since: 1.05b */
+		/** 
+		 * flexible remove methode remove a loader
+		 * since: 1.05b 
+		 */
 		public function removeLoader(conf:Object):Boolean {
 
 			var index:int = this.getLoaderIndex(conf);
@@ -154,20 +179,26 @@
 			}
 			return false;
 		}
-		/** @since: 1.04b */
+		/** 
+		 * remove a loader by name
+		 * since: 1.04b 
+		 */
 		public function removeLoaderByName(name:String):Boolean {
 			return this.removeLoader( { name: name } );
 		}
 		
-		/** @since: 1.04b */
+		/** 
+		 * remove a loader by url
+		 * since: 1.04b 
+		 */
 		public function removeLoaderByUrl(url:String):Boolean  {
 			return this.removeLoader( { url: url } );
 		}
 		
 		
-		/*
-			loader Class Collection
-		*/
+		/**
+		 * loader Class Collection
+		 */
 		static private var _loaderClassCollection:nfLoaderClassCollection = new nfLoaderClassCollection;
 				
 		static public function registLoaderClass(type:String, loaderClass:Class, priority:int = 0):void {
