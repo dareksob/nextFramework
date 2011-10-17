@@ -3,49 +3,49 @@
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import nextFramework.debug.ILog;
-	import nextFramework.nF;
 	
-	/*
+	/**
+	 * default logger class for nextframework
+	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.0 beta
+	 * @version 1.07
 	 */
 	 
-	public class nfLog extends EventDispatcher implements ILog
+	public class nfLog implements ILog
 	{
-		public static const EVENT_NEWLOG:String = 'newLog';
-		public static const EVENT_CLEARLOG:String = 'clearLog';
-		function nfLog() {
-			this.clear();
-		}
+		private var _logCollection:Array = new Array;
+		public var autoTrace:Boolean = true;
 		
-		public function autoShowByNewLog():ILog {
-			if (!this.hasEventListener(EVENT_NEWLOG)) {
-				this.addEventListener(nfLog.EVENT_NEWLOG, this.eventNewLog);	
+		/**
+		 * add a log to the list
+		 * @param	message, normaly a string
+		 * @param	caller, a class who call this log event
+		 * @return	ILog
+		 */
+		public function addLog(message:*, caller:* = null):ILog { 
+			this._logCollection.push(new nfLogMessage(message, caller));
+			if (this.autoTrace) {
+				this.traceLastLog();
 			}
 			return this;
 		}
-		private function eventNewLog(event:Event):void { 
-			trace(event.target.lastLog);
-		}
 		
-		private var _logCollection:Array;
-		
-		/* INTERFACE nextFramework.debug.ILog */
-		
-		public function addLog(message:*, caller:* = null):ILog {
-			this._logCollection.push(new nfLogMessage(message, caller));
-			this.dispatchEvent(new Event(EVENT_NEWLOG, false, false));
-			return this;
-		}
-		
+		/**
+		 * return all logs
+		 * @return	Array
+		 */
 		public function getLogs():Array {
 			return this._logCollection;
 		}
 		
+		/**
+		 * return the last log entry
+		 * @return
+		 */
 		public function get lastLog():Object {
 			if (this._logCollection.length > 0) {
 				return this._logCollection[this._logCollection.length-1];
@@ -53,44 +53,42 @@
 			return null;
 		}
 		
+		/**
+		 * clear all log enties
+		 * @return	ILog
+		 */
 		public function clear():ILog {
 			this._logCollection = new Array;
-			this.dispatchEvent(new Event(EVENT_CLEARLOG, false, false));
 			return this;
 		}
 		
 		
-		
+		/**
+		 * return the log count
+		 */
 		public function get length():uint {
 			return this._logCollection.length;
 		}
 		
+		/**
+		 * trace all log entries
+		 * 
+		 * @return	ILog
+		 */
 		public function traceLog():ILog {
 			for each(var log:Object in this._logCollection) {
 				trace(log.toString());
 			}
 			return this;
 		}
+		/**
+		 * trace the last log entry
+		 * @return	ILog
+		 */
 		public function traceLastLog():ILog {
 			trace(this.lastLog);
 			return this;
-		}
-
-		static public function defaultInit():nfLog {
-			//regist logger
-			var log:nfLog = new nfLog;
-			log.addEventListener(
-				nfLog.EVENT_NEWLOG, 
-				function(e:Event) { 
-					trace( e.target.lastLog) 
-				} 
-			);
-			return log;
-		}
-		
-		
-
-		
+		}	
 	}
 
 }

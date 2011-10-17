@@ -2,7 +2,9 @@ package nextFramework.debug
 {
 	import flash.events.IEventDispatcher;
 	
-	/*
+	/**
+	 * interface for logger classes
+	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
@@ -11,7 +13,7 @@ package nextFramework.debug
 	 * @version 1.0 beta
 	 */
 	 
-	public interface ILog extends IEventDispatcher
+	public interface ILog
 	{
 		function addLog(object:*, caller:* = null):ILog;
 		function getLogs():Array;
@@ -20,7 +22,8 @@ package nextFramework.debug
 		function get lastLog():Object;
 		function get length():uint;
 		
-		function traceLog():ILog;	
+		function traceLog():ILog;
+		function traceLastLog():ILog
 	}
 	
 }
