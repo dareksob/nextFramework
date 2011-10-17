@@ -1,46 +1,32 @@
 ﻿package nextFramework.input 
 {
 	import flash.display.Stage;
+	import flash.errors.IllegalOperationError;
 	import flash.events.KeyboardEvent;
-	import nextFramework.nF;
 	import nextFramework.nfRegistry;
 	
-	/*
+	/**
+	 * input class for keyboard control
+	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.07
+	 * @version 1.08
 	 */
 	 
 	public class nfKeyboard
 	{
-		static public const KEY_DOWN:String = KeyboardEvent.KEY_DOWN;
-		static public const KEY_UP:String = KeyboardEvent.KEY_UP;
-		
 		/**
-		 * todo return keycodes for keyboard
-		 * 
-		 * @param	value
-		 * @return	string
-		 */
-		static public function getKeyCode(value:*):String {
-			if (value is String) {
-
-			}
-			return value.toString();
-		}
-		
-		/*
 		 * keyMapping
 		 */
-		private var _keyMapping:nfKeyMapping = new nfKeyMapping();
+		private var _keyMapping:nfKeyMapping;
 		public function get keyMapping():nfKeyMapping { 
 			return this._keyMapping; 
 		}
 		
-		/*
+		/**
 		 * activate
 		 */
 		private var _activate:Boolean = true;
@@ -54,16 +40,25 @@
 			return this._activate;
 		}
 		
-		//return if a key is pressed
+		/**
+		 * @return if a key is pressed
+		 */
 		private var _keyDown:Boolean = false;
 		public function isKeyDown():Boolean {
 			return this._keyDown;
 		}
 		
-		//return the keycode of pressed
+		/**
+		 * @return the last charcode
+		 */
 		private var _charCode:uint = 0;
 		public function charCode():uint {
 			return this._charCode;
+		}
+		
+		private var _pressedKeyCodes:Array = new Array;
+		public function pressedKeyCodes():Array {
+			return this._pressedKeyCodes;
 		}
 
 		//return the keycode of pressed
@@ -96,41 +91,71 @@
 			return this._altKey;
 		}
 		
-		//events
+		/**
+		 * event key down
+		 * @param	event
+		 */
 		protected function eventKeyDown(event:KeyboardEvent):void 
 		{
 			if (this.isActivate()) {
-				this._keyDown = true;
-				this._charCode = event.charCode;
-				this._ctrlKey = event.ctrlKey;
-				this._keyCode = event.keyCode;
-				this._keyLocation = event.keyLocation;
-				this._shiftKey = event.shiftKey;
-				this._altKey = event.altKey;
-				
-				this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, nfKeyboard.KEY_DOWN + ' ' + this._charCode), event);
-				this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, nfKeyboard.KEY_DOWN), event);
+				this.updateKeyProperties(true, event);
+				var keycode:String = nfKeyboardKeyCodeCreator.createByEvent(KeyboardEvent.KEY_DOWN, event, this._pressedKeyCodes);
+				this.keyMapping.callKeyMap(keycode, event);
 			}
 		}
+		/**
+		 * event key up
+		 * @param	event
+		 */
 		protected function eventKeyUp(event:KeyboardEvent):void 
 		{
 			if (this.isActivate()) {
-				this._keyDown = false;
-				this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, nfKeyboard.KEY_UP + ' ' + this._charCode), event);
-				this.keyMapping.callAllKeyMaps(nfKeyMapping.getKeyCodeByEvent(event, nfKeyboard.KEY_UP), event);
+				var releasedKeyCodes:Array = this.updateKeyProperties(false, event);
+				var keycode:String = nfKeyboardKeyCodeCreator.createByEvent(KeyboardEvent.KEY_UP, event, releasedKeyCodes);
+				this.keyMapping.callKeyMap(keycode, event);
 			}
 		}
 		
+		/**
+		 * update function by state
+		 * @param	keydown
+		 * @param	event
+		 * @return	Array, return removedKeyCodes
+		 */
+		private function updateKeyProperties(keydown:Boolean, event:KeyboardEvent):Array {
+			this._keyDown = keydown;
+			this._charCode = event.charCode;
+			this._ctrlKey = event.ctrlKey;
+			this._keyCode = event.keyCode;
+			this._keyLocation = event.keyLocation;
+			this._shiftKey = event.shiftKey;
+			this._altKey = event.altKey;
+			
+			var index:int = this._pressedKeyCodes.indexOf(event.keyCode);
+			var releasedKeyCodes:Array = [];
+			
+			if (this._keyDown) {
+				if (index == -1) {
+					this._pressedKeyCodes.push(event.keyCode);
+				}
+			}else if(index > -1) {
+				releasedKeyCodes = this._pressedKeyCodes.splice(index, 1);
+			}
+			this._pressedKeyCodes.sort();
+			return releasedKeyCodes;
+		}
 		
-		//constuct
-		public function nfKeyboard() 
-		{
+		
+		/**
+		 * singelton constructor
+		 */
+		public function nfKeyboard() {
 			if(!nfKeyboard._canCreate){
-				throw new Error('nfKeyboard is a singelton class.');
+				throw new IllegalOperationError('nfKeyboard is a singelton class.');
 			}
+			this._keyMapping = new nfKeyMapping(this);
 		}
 		
-		//singelton
 		static private var _instance:nfKeyboard = null;
 		static private var _canCreate:Boolean = false;
 		static public function get instance():nfKeyboard
@@ -144,7 +169,10 @@
 			return nfKeyboard._instance;
 		}
 		
-		//init
+		/**
+		 * init nfKeyboard class for catching events
+		 * !important call this method if the Registry has the stage
+		 */
 		static public function init():void {
 			var stage:Stage = nfRegistry.instance.stage;
 			

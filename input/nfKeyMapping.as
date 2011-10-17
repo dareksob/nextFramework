@@ -1,114 +1,66 @@
 ﻿package nextFramework.input 
 {
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	
-	/*
+	/**
+	 * Keymapping class for combine keycodes with events
+	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.07
+	 * @version 1.08
 	 */
 	 
 	public final class nfKeyMapping
 	{
-		private var _keymapList:Vector.<nfKeyMappingNode> = new Vector.<nfKeyMappingNode>();
-		public function get keymapList():Vector.<nfKeyMappingNode> { 
-			return this._keymapList; 
+		private var _owner:Object = null;
+		private var _dispatcher:EventDispatcher;
+		
+		public function nfKeyMapping(owner:Object) {
+			this._owner = owner;
+			this._dispatcher = new EventDispatcher()
 		}
 		
-		static public function getKeyCodeByEvent(event:Object, state:String):String {
-			var keyCode:String = "";
-			
-			if (event is MouseEvent || event is KeyboardEvent) {
-
-				/** todo keyboard location */
-				var keyList:Array = new Array;
-				if(event.shiftKey){
-					keyList.push('shift');
+		/**
+		 * add KeyMap
+		 * 
+		 * @param	keyCode
+		 * @param	call
+		 * @param	overrideExists, remove the event if exists
+		 * @return	nfKeyMapping
+		 */
+		public  function addKeyMap(keyCode:String, call:Function = null, overrideExists:Boolean = false):nfKeyMapping {
+			if (overrideExists) {
+				if (this._dispatcher.hasEventListener(keyCode)) {
+					this._dispatcher.removeEventListener(keyCode, call);
 				}
-				if(event.altKey){
-					keyList.push('alt');
-				}
-				if(event.ctrlKey){
-					keyList.push('ctrl');
-				}
-				
-				keyList.push(state);
-				
-				keyCode = keyList.join('+');
 			}
-			
-			return keyCode;
-		}
-		
-		public function callAllKeyMaps(keyValue:String, event:Event):nfKeyMapping {
-			var list:Vector.<nfKeyMappingNode> = this.getKeyMapList(keyValue);
-			for each(var keyNode:nfKeyMappingNode in list) {
-				keyNode._event = event;
-				keyNode.call();
-			}
+			this._dispatcher.addEventListener(keyCode, call);
 			return this;
 		}
 		
-		public function addKeyMap(nodeOrKeyValue:Object, func:Function = null, userdata:* = null, removeIfExists:Boolean = false):nfKeyMapping {
-			var node:nfKeyMappingNode = null;
-			if (nodeOrKeyValue is nfKeyMappingNode) {
-				node = nodeOrKeyValue as nfKeyMappingNode;
-				nodeOrKeyValue = node.keyvalue;
-				
-			}else {
-				node = new nfKeyMappingNode(nodeOrKeyValue as String, func, userdata);
-			}
-			
-			if (removeIfExists) {
-				this.removeKeyMap(nodeOrKeyValue as String);
-			}
-			
-			this.keymapList.push(node);
+		/**
+		 * remove KeyMap
+		 * @param	keyvalue
+		 * @param	func
+		 * @return	nfKeyMapping
+		 */
+		public function removeKeyMap(keyCode:String, func:Function):nfKeyMapping {
+			this._dispatcher.removeEventListener(keyCode, func);
 			return this;
 		}
 		
-		
-		public function removeKeyMap(keyvalue:String):nfKeyMapping {
-			var nList:Vector.<nfKeyMappingNode> = new Vector.<nfKeyMappingNode>();
-			
-			for each(var keyNode:nfKeyMappingNode in this.keymapList) {
-				if (keyNode.keyvalue != keyvalue) {
-					nList.push(keyNode);
-				}
-			}
-			this._keymapList = nList;
-			return this;
-		}
-		
-		public function getKeyMapList(keyValue:String):Vector.<nfKeyMappingNode> {
-			var rList:Vector.<nfKeyMappingNode> = new Vector.<nfKeyMappingNode>();
-			for each(var keyNode:nfKeyMappingNode in this.keymapList) {
-				if (keyNode.keyvalue == keyValue) {
-					rList.push(keyNode);
-				}
-			}
-			return rList;
-		}
-		
-		public function getFirstKeyMap(keyValue:String):nfKeyMappingNode {
-			var rList:Vector.<nfKeyMappingNode> = this.getKeyMapList(keyValue);
-			if (rList.length > 0) {
-				return rList[0];
-			}
-			return null;
-		}
-		
-		public function hasKeyMap(keyValue:String):Boolean {
-			var rList:Vector.<nfKeyMappingNode> = this.getKeyMapList(keyValue);
-			if (rList.length > 0) {
-				return true
-			}
-			return false;
+		/**
+		 * call event
+		 * @param	keyCode
+		 */
+		internal function callKeyMap(keyCode:String, event:Event) {
+			this._dispatcher.dispatchEvent(new nfKeyMappingEvent(keyCode, event));
 		}
 		
 	}
