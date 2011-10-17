@@ -1,14 +1,11 @@
 ﻿package nextFramework.animation 
 {
-	import fl.motion.easing.Linear;
 	import fl.motion.easing.Quadratic;
 	import nextFramework.animation.ITimeline;
-	import fl.motion.easing.Cubic;
 	import nextFramework.animation.tweens.ITween;
 	import nextFramework.collection.IKeyValueNode;
 	import nextFramework.collection.nfKeyValueCollection;
 	import nextFramework.collection.nfKeyValueNode;
-	import nextFramework.debug.nfTrace;
 	import nextFramework.utils.nfObject;
 	
 	/**
