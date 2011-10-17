@@ -3,8 +3,14 @@
 	import flash.geom.Matrix;
 	
 	/**
-	 * ...
+	 * translation class
+	 * 
 	 * @author Darius Sobczak
+	 * @website dsobczak.de
+	 * @mail mail@dsobczak.de
+	 *
+	 * @website nextframework.de
+	 * @version 1.06
 	 */
 	
 	public class nfTranslate 

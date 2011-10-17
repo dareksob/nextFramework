@@ -2,9 +2,16 @@
 {
 	import flash.geom.Point;
 	import nextFramework.utils.nfMath;
+	
 	/**
-	 * ...
+	 * vector object in 2d space
+	 * 
 	 * @author Darius Sobczak
+	 * @website dsobczak.de
+	 * @mail mail@dsobczak.de
+	 *
+	 * @website nextframework.de
+	 * @version 1.06
 	 */
 	public class nfVector 
 	{
@@ -20,7 +27,7 @@
 		static public function create(x:Number, y:Number):nfVector {
 			return new nfVector(x, y);
 		}
-		
+
 		public function setZero():nfVector {
 			this.x = 0;
 			this.y = 0;
@@ -30,8 +37,11 @@
 			return this.x + this.y;
 		}
 		
-		//make a copy
-		public function copy():nfVector {
+		/**
+		 * clone this vector
+		 * @return	nfVector
+		 */
+		public function clone():nfVector {
 			return new nfVector(this.x, this.y);
 		}
 		
@@ -94,9 +104,10 @@
 		}
 		
 		
-		/*
-			normalize
-		*/
+		/**
+		 * normalize
+		 * @return	nfVector
+		 */
 		public function normalize():nfVector {
 			var mag:Number = Math.sqrt(this.x * this.x + this.y * this.y);
 			this.x /= mag;
@@ -104,52 +115,62 @@
 			return this;
 		}
 		
-		/*
+		/**
 		 * radiant of vector
+		 * @return	Number
 		 */
 		public function get radiant():Number {
 			return Math.atan2(this.y, this.x);
 		}
 		
-		/*
+		/**
 		 * angle of vector
+		 * @return	Number
 		 */
 		public function get degree():Number {
 			return Math.atan2(this.y, this.x) * nfMath.degreePI;
 		}
 	
 		
-		/*
-			dot product
-		*/
+		/**
+		 * dot product
+		 * @param	vector
+		 * @return	Number
+		 */
 		public function dot(vector:nfVector):Number {
 			return this.x * vector.x + this.y * vector.y;
 		}
 		
-		/*
-			scalar product
-		*/
+		/**
+		 * scalar product
+		 * @param	value
+		 * @return	Number
+		 */
 		public function scalar(value:Number):Number {
 			return this.x * value + this.y * value;
 		}
 		
-		/*
-			length product
-		*/
+		/**
+		 * length of this vector
+		 * @return	Number
+		 */
 		public function get length():Number {
 			return Math.sqrt(this.x * this.x + this.y * this.y);
 		}
 		
-		/*
-			midpoint
-		*/
+		/**
+		 * return the middle point of this vector
+		 * @return	nfVector
+		 */
 		public function getMidPointTo(vector:nfVector):nfVector {
 			return new nfVector((this.x + vector.x) / 2, (this.y + vector.y) / 2);
 		}
 		
-		/*
-			distance
-		*/
+		/**
+		 * calculate the distance to a vector
+		 * @param	vector
+		 * @return
+		 */
 		public function distance(vector:nfVector):Number {
 			return Math.sqrt(Math.pow(vector.x - this.x, 2) + Math.pow(vector.y - this.y, 2));
 		}
@@ -160,6 +181,10 @@
 			return this;
 		}
 		
+		/**
+		 * convert this vector to point
+		 * @return Point
+		 */
 		public function get point():Point {
 			return new Point(x, y);
 		}
