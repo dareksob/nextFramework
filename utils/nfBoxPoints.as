@@ -4,58 +4,62 @@
 	import flash.display.Stage;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import nextFramework.nfProperties;
 	
 	/**
+	 * coordinate object for rectangle data
+	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.05 beta
+	 * @version 1.07
 	 */
 	 
 	public final class nfBoxPoints
 	{
 		function nfBoxPoints(object:Object) {
+			var position:Point = new Point;
+			var stagePosition:Point = new Point;
+			var rect:Rectangle = new Rectangle;
+			
 			if (object is Stage) {
-				this.setPointsByStage(object as Stage);
+				//stage
+				rect.width = object.stageWidth;
+				rect.height = object.stageHeight;
 			}else if (object is DisplayObject) {
-				this.setPointsByDisplayObject(object as DisplayObject);
+				//DisplayObject
+				rect = object.getRect(null);
+				stagePosition = object.localToGlobal(new Point);
+				position = new Point(object.x, object.y);
 			}else if (object is Rectangle) {
-				this.setPointsByRect(object as Rectangle);
+				//rectange
+				stagePosition = object.topLeft;
+				position = new Point(object.left, object.top);
 			}else if (object is Object) {
-				nfProperties.setObjectProperties(this._rect, object);
+				if (object.width is Number) {
+					rect.width = object.width ;
+				}
+				if (object.height is Number) {
+					rect.height = object.height;
+				}
+				if (object.x is Number) {
+					rect.x = object.x;
+				}
+				if (object.y is Number) {
+					rect.y = object.y;
+				}
 			}
-		}
-		
-		static public function create(object:Object):nfBoxPoints {
-			return new nfBoxPoints(object);
-		}
-		
-		/*
-		 * methodes for spezial type
-		 */
-		private function setPointsByStage(stage:Stage):void {
-			this.setPointsOfRect(new Rectangle(0, 0, stage.stageWidth, stage.stageHeight));
-			this._stagePostition = new Point(0, 0);
-			this.setPosition(0,0);
-		}
-		
-		private function setPointsByRect(rect:Rectangle):void {
+			
 			this.setPointsOfRect(rect);
-			this._stagePostition = rect.topLeft;
-			this.setPosition(rect.left, rect.top);
+			this._stagePostition = stagePosition;
+			this._position = position;
 		}
+
 		
-		private function setPointsByDisplayObject(object:DisplayObject):void {
-			this.setPointsOfRect(object.getRect(null));
-			this._stagePostition = object.localToGlobal(new Point);
-			this.setPosition(object.x, object.y);
-		}
-		
-		/*
+		/**
 		 * for all support elements
+		 * @param	rect
 		 */		
 		private function setPointsOfRect(rect:Rectangle):void {		
 			this._rect = rect;
@@ -67,9 +71,6 @@
 				this.leftTop.y + this.centerPointRelative.y
 			);
 		}
-		private function setPosition(x:Number, y:Number):void {
-			this._position = new Point(x, y);
-		}
 		
 		public function getByStage(propname:String):Point {
 			var point:Point = this[propname];
@@ -77,35 +78,35 @@
 			return point;
 		}
 
-		/*
+		/**
 		 * rightBottom
 		 */
 		public function get rightBottom():Point { 
 			return new Point(this.rect.right, this.rect.bottom);
 		}
 		
-		/*
+		/**
 		 * leftBottom
 		 */
 		public function get leftBottom():Point { 
 			return new Point(this.rect.left, this.rect.bottom);
 		}
 		
-		/*
+		/**
 		 * rightTop
 		 */
 		public function get rightTop():Point { 
 			return new Point(this.rect.right, this.rect.top);
 		}
 		
-		/*
+		/**
 		 * leftTop
 		 */
 		public function get leftTop():Point { 
 			return new Point(this.rect.left, this.rect.top);
 		}
 		
-		/*
+		/**
 		 * position
 		 */
 		private var _position:Point = new Point;
@@ -113,7 +114,7 @@
 			return this._position; 
 		}
 		
-		/*
+		/**
 		 * pivotPointLeftTop
 		 */
 		private var _stagePostition:Point = new Point;
@@ -121,7 +122,7 @@
 			return this._stagePostition; 
 		}
 
-		/*
+		/**
 		 * centerPoint
 		 */
 		private var _centerPoint:Point = new Point;
@@ -129,7 +130,7 @@
 			return this._centerPoint; 
 		}
 		
-		/*
+		/**
 		 * centerPointRelative
 		 */
 		private var _centerPointRelative:Point = new Point;
@@ -138,7 +139,7 @@
 		}
 		
 		
-		/*
+		/**
 		 * absLeftTop
 		 */
 		private var _absLeftTop:Point = new Point;
@@ -146,7 +147,7 @@
 			return this._absLeftTop; 
 		}
 		
-		/*
+		/**
 		 * rect
 		 */
 		private var _rect:Rectangle = new Rectangle
@@ -154,28 +155,28 @@
 			return this._rect; 
 		}
 		
-		/*
+		/**
 		 * hSize
 		 */
 		public function get hSize():Point { 
 			return new Point(this.width / 2, this.height / 2);
 		}
 		
-		/*
+		/**
 		 * size
 		 */
 		public function get size():Point { 
 			return new Point(this.width, this.height);
 		}
 		
-		/*
+		/**
 		 * width
 		 */
 		public function get width():Number { 
 			return this._rect.width; 
 		}
 		
-		/*
+		/**
 		 * height
 		 */
 		public function get height():Number { 
