@@ -16,7 +16,7 @@
 		private var _styles:Vector.<IStyle>;
 		private var _adapters:Vector.<IDrawingAdapter>;
 		
-		public function nfDrawingOperator(graphics:Graphics, conf:Object) 
+		public function nfDrawingOperator(graphics:Graphics, conf:Object = null) 
 		{
 			this.graphics = graphics;
 			this._styles = new Vector.<IStyle>();

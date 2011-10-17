@@ -17,7 +17,7 @@
 	public class Line extends AbstractStyle implements IStyle
 	{
 		
-		function nfLineStyle(conf:Object = null)
+		function Line(conf:Object = null)
 		{
 			nfObject.setProps(this, conf);
 		}
