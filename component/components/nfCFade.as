@@ -80,7 +80,7 @@
 			return this._startIn; 
 		}
 		public function set startIn(value:Object) {
-			this._startIn = nfObject.merge(this._startIn,value);
+			this._startIn = nfObject.extend(this._startIn, value);
 		}
 		/*
 		 * endIn
@@ -90,7 +90,7 @@
 			return this._endIn; 
 		}
 		public function set endIn(value:Object) {
-			this._endIn = nfObject.merge(this._endIn, value);
+			this._endIn = nfObject.extend(this._endIn, value);
 		}
 		
 		/*
@@ -101,7 +101,7 @@
 			return this._startOut; 
 		}
 		public function set startOut(value:Object) {
-			this._startOut = nfObject.merge(this._startOut,value);
+			this._startOut = nfObject.extend(this._startOut,value);
 		}
 		/*
 		 * endIn
@@ -111,7 +111,7 @@
 			return this._endOut; 
 		}
 		public function set endOut(value:Object) {
-			this._endOut = nfObject.merge(this._endOut, value);
+			this._endOut = nfObject.extend(this._endOut, value);
 		}
 		
 		

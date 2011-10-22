@@ -3,7 +3,8 @@ package nextFramework.component.components
 	import flash.display.MovieClip;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
-	import nextFramework.component.*;
+	import nextFramework.component.nfComponentObject;
+	import nextFramework.component.nfComponentObjectContainer;
 	
 	/**
 	 * @author Darius Sobczak

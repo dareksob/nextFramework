@@ -1,14 +1,15 @@
 ﻿package nextFramework.component.components 
 {
 	import flash.display.DisplayObject;
-	import flash.display.Sprite;
 	import flash.display.Stage;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.external.ExternalInterface;
 	import flash.net.navigateToURL;
 	import flash.net.URLRequest;
-	import nextFramework.component.*;
+	import nextFramework.component.nfComponentObject;
+	import nextFramework.component.nfComponentObjectContainer;
 	
 	/**
 	 * 
@@ -42,12 +43,12 @@
 			_stage = this.object.stage;
 			_stage.removeEventListener(Event.ADDED_TO_STAGE, this.addedToStage);
 			_stage.addEventListener(MouseEvent.CLICK, this.clicked, true, 1, true);
+			
 			if (this.object.root is Sprite) {
 				(this.object.root as Sprite).buttonMode = true;
 			}
 		}
-		override public function removed():void 
-		{
+		override public function removed():void {
 			if (this._stage) {
 				_stage.removeEventListener(MouseEvent.CLICK, this.clicked, true);
 			}

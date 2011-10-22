@@ -1,6 +1,5 @@
 ﻿package nextFramework.translate 
 {
-	import flash.geom.Point;
 	import nextFramework.utils.nfMath;
 	
 	/**
@@ -11,17 +10,13 @@
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.06
+	 * @version 1.08
 	 */
-	public class nfVector 
+	public class nfVector extends nfPoint
 	{
-		public var x:Number = 0;
-		public var y:Number = 0;
-		
 		public function nfVector(x:Number = 0, y:Number = 0) 
 		{
-			this.x = x;
-			this.y = y;
+			super(x, y);
 		}
 		
 		static public function create(x:Number, y:Number):nfVector {
@@ -179,14 +174,6 @@
 			this.x = vector.x - this.x;
 			this.y = vector.y - this.y;
 			return this;
-		}
-		
-		/**
-		 * convert this vector to point
-		 * @return Point
-		 */
-		public function get point():Point {
-			return new Point(x, y);
 		}
 		
 		

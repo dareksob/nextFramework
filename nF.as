@@ -2,8 +2,10 @@
 {
 	import flash.display.DisplayObject;
 	import nextFramework.component.nfComponent;
+	import nextFramework.debug.ILog;
 	import nextFramework.event.nfEachParam;
-	import nextFramework.flash.*;
+	import nextFramework.flash.nfFlashFilter;
+	import nextFramework.flash.nfFlashObject;
 	import nextFramework.loader.nfLoader;
 	import nextFramework.loader.nfLoaderNode;
 	import nextFramework.transform.nfAlign;
@@ -400,6 +402,11 @@
 				.initClasses(conf && conf.initClasses ? conf.initClasses : null)
 				.initFunc(conf && conf.initFunc ? conf.initFunc : null)
 				.setRoot(root);
+			
+			//logger
+			if (conf.log is ILog) {
+				nfRegistry.instance.log = conf.log;
+			}
 			
 			//create nf set properties and return it
 			var _this:nF = nF.create();

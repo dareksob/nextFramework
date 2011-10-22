@@ -149,7 +149,7 @@
 		 * @param	value
 		 * @return	nfRegistry
 		 */
-		internal function setRoot(value:DisplayObject):nfRegistry {
+		public function setRoot(value:DisplayObject):nfRegistry {
 			if (!this._root) {				
 				this._root = value;
 				
@@ -176,7 +176,7 @@
 					}
 				}
 			}else if (value is Class) {
-				this.initFunc(classNode.init);
+				this.initFunc(value.init);
 			}
 			return this;
 		}

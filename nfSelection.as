@@ -1,10 +1,11 @@
 ﻿package nextFramework 
 {
-	import flash.display.*;
+	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import nextFramework.utils.nfClass;
 	import nextFramework.utils.nfList;
 	
-	/*
+	/**
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de

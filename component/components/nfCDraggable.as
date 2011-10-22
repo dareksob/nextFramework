@@ -1,6 +1,8 @@
 ﻿package nextFramework.component.components 
 {
 	import flash.display.DisplayObject;
+	import flash.display.Stage;
+	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import nextFramework.component.nfComponentObject;
 	import nextFramework.component.nfComponentObjectContainer;
