@@ -1,5 +1,6 @@
 ﻿package nextFramework.utils 
 {
+	import flash.utils.ByteArray;
 	import nextFramework.nfRegistry;
 	
 	/**
@@ -14,38 +15,18 @@
 	 */
 	 
 	public class nfObject
-	{
+	{	
 		/**
-		 * make a copy of a object, only useble for stdObjects
+		 * deep objects copy
 		 * 
 		 * @param	object
-		 * @return	Object, new clone object
+		 * @return	*
 		 */
-		static public function clone(object:Object):Object {
-			var nobject:Object = { };
-			if (object is Object) {
-				for (var prop:String in object) {
-					nobject[prop] = object[prop];
-				}
-			}
-			return nobject;
-		}
-		
-		/**
-		 * merge to object to getter like copy to
-		 * @param	object, can be null.
-		 * @param	addobject
-		 * @return	Object
-		 */
-		static public function merge(object:Object, addobject:Object):Object {
-			if (object == null) object = { };
-			
-			if (addobject is Object) {
-				for (var prop:String in addobject) {
-					object[prop] = addobject[prop];
-				}
-			}
-			return object;
+		static public function clone(object:Object):* {
+			var data:ByteArray = new ByteArray();
+			data.writeObject(object);
+			data.position = 0;
+			return data.readObject();
 		}
 		
 		/**
@@ -107,6 +88,22 @@
 				}
 			}
 			return result;
+		}
+		
+		/**
+		 * extends the object by ther object
+		 * 
+		 * @param	object
+		 * @param	conf
+		 * @param	deepCopy, default false
+		 * @return	Object
+		 */
+		static public function extend(object:Object, conf:Object, deepCopy:Boolean = false):Object {
+			var copyObject:Object = deepCopy ? nfObject.clone(conf) : conf;
+			for (var prop:String in copyObject) {
+				object[prop] = copyObject[prop];
+			}
+			return object;
 		}
 		
 		
