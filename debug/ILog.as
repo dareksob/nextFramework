@@ -16,14 +16,6 @@ package nextFramework.debug
 	public interface ILog
 	{
 		function addLog(object:*, caller:* = null):ILog;
-		function getLogs():Array;
-		function clear():ILog;
-		
-		function get lastLog():Object;
-		function get length():uint;
-		
-		function traceLog():ILog;
-		function traceLastLog():ILog
 	}
 	
 }

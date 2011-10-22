@@ -18,17 +18,6 @@ package nextFramework.debug
 			trace(nfTrace.getPropString(object, inDepth));
 		}
 		
-		
-		static public function traceObject(object:*):void {
-			if (object is Vector) {
-				object = nfTrace.getArrayString(nfList.toArray(object));
-			}else if (object is Array) {
-				object = nfTrace.getArrayString(object);
-			}
-			
-			trace(object);
-		}
-		
 		static public function getArrayString(list:Array):String {
 			var message:String = list+nfTrace.BREAK;
 			for (var param:Object in list) {
