@@ -1,6 +1,5 @@
-package nextFramework.loader.types
+﻿package nextFramework.loader.types
 {
-	import nextFramework.event.nfLoaderEvent;
 	import nextFramework.loader.*;
 	import flash.net.*;
 	import flash.events.*;

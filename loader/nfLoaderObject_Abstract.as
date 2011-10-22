@@ -1,11 +1,14 @@
 ﻿package nextFramework.loader 
 {
-	import flash.display.LoaderInfo;
-	import flash.events.*;
-	import nextFramework.event.nfLoaderEvent;
+	import flash.events.ErrorEvent;
+	import flash.events.ProgressEvent;
+	import flash.events.Event;
+	import flash.events.IOErrorEvent;
+	import flash.events.EventDispatcher;
 	import nextFramework.loader.nfLoaderNode;
+	import nextFramework.nfRegistry;
 	
-	/*
+	/**
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
@@ -42,6 +45,7 @@
 			if (this.loaderNode.conf.onError is Function) {
 				this.loaderNode.conf.onError(event);
 			}
+			nfRegistry.addLog(event.text, event.target);
 		}
 		protected function eventProgressHandler(event:ProgressEvent):void {
 			if (this.loaderNode.conf.onProcess is Function) {

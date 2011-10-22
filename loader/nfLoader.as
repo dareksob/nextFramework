@@ -12,7 +12,7 @@
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.05 beta
+	 * @version 1.08
 	 */
 	 
 	public class nfLoader
@@ -73,6 +73,8 @@
 					loaderClass.load();
 					return loaderClass;
 				}
+			}else {
+				nfRegistry.addLog("Loader Type do not exists. Type:" + type, this);
 			}
 			return null;
 		}
