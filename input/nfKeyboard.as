@@ -36,7 +36,7 @@
 		public function set activate(value:Boolean) {
 			this._activate = value; 
 		}
-		public function isActivate():Boolean {
+		public function get isActivate():Boolean {
 			return this._activate;
 		}
 		
@@ -44,7 +44,7 @@
 		 * @return if a key is pressed
 		 */
 		private var _keyDown:Boolean = false;
-		public function isKeyDown():Boolean {
+		public function get isKeyDown():Boolean {
 			return this._keyDown;
 		}
 		
@@ -52,42 +52,52 @@
 		 * @return the last charcode
 		 */
 		private var _charCode:uint = 0;
-		public function charCode():uint {
+		public function get charCode():uint {
 			return this._charCode;
 		}
 		
 		private var _pressedKeyCodes:Array = new Array;
-		public function pressedKeyCodes():Array {
+		public function get pressedKeyCodes():Array {
 			return this._pressedKeyCodes;
+		}
+		
+		/**
+		 * condition for keycode pressed
+		 * 
+		 * @param	keycode
+		 * @return	Boolean
+		 */
+		public function isKeyCodePressed(keycode:uint):Boolean {
+			return this._pressedKeyCodes.indexOf(keycode) > -1;
 		}
 
 		//return the keycode of pressed
 		private var _keyCode:uint = 0;
-		public function keyCode():uint {
+		public function get keyCode():uint {
 			return this._keyCode;
 		}
 		
 		//return the keycode of pressed
 		private var _keyLocation:uint = 0;
-		public function keyLocation():uint {
+		public function get keyLocation():uint {
 			return this._keyLocation;
 		}
 		
 		//ctrl status
 		private var _ctrlKey:Boolean = false;
-		public function ctrlKey():Boolean {
+		public function get ctrlKey():Boolean {
 			return this._ctrlKey;
 		}
 		
 		//shift status
 		private var _shiftKey:Boolean = false;
-		public function shiftKey():Boolean {
+		public function get shiftKey():Boolean {
 			return this._shiftKey;
 		}
 		
 		//alt status
 		private var _altKey:Boolean = false;
-		public function altKey():Boolean {
+		public function get altKey():Boolean {
 			return this._altKey;
 		}
 		
@@ -97,7 +107,7 @@
 		 */
 		protected function eventKeyDown(event:KeyboardEvent):void 
 		{
-			if (this.isActivate()) {
+			if (this.isActivate) {
 				this.updateKeyProperties(true, event);
 				var keycode:String = nfKeyboardKeyCodeCreator.createByEvent(KeyboardEvent.KEY_DOWN, event, this._pressedKeyCodes);
 				this.keyMapping.callKeyMap(keycode, event);
@@ -109,7 +119,7 @@
 		 */
 		protected function eventKeyUp(event:KeyboardEvent):void 
 		{
-			if (this.isActivate()) {
+			if (this.isActivate) {
 				var releasedKeyCodes:Array = this.updateKeyProperties(false, event);
 				var keycode:String = nfKeyboardKeyCodeCreator.createByEvent(KeyboardEvent.KEY_UP, event, releasedKeyCodes);
 				this.keyMapping.callKeyMap(keycode, event);
