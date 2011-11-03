@@ -1,18 +1,19 @@
 ﻿package nextFramework.loader.types
 {
-	import nextFramework.loader.*;
-	import flash.net.*;
-	import flash.events.*;
-	import flash.display.*;
-	import nextFramework.nfProperties;
+	import flash.events.Event;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
+	import nextFramework.loader.ILoaderClass;
+	import nextFramework.loader.nfLoader;
+	import nextFramework.loader.nfLoaderObject_Abstract;
 	
-	/*
+	/**
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.0 beta
+	 * @version 1.09
 	 */
 	 
 	public class nfLoaderClass_Text extends nfLoaderObject_Abstract implements ILoaderClass

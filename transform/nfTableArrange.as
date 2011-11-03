@@ -66,7 +66,6 @@
 					positionCollection.pushByValue(node, offsetPosition);
 			
 					if (cellNum >= this._cellCount) {
-						trace(cellNum);
 						position[invertDirection] += this._cellSize.getByAxis(invertDirection) + this._spacing[invertDirection];
 						position[this._direction] = 0;
 						cellNum = 1;

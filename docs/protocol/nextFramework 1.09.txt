@@ -1,0 +1,13 @@
+#nfKeyboard
+mapping for press and release of key
+
+#nfClass
+clone removed
+getDefaultClasses removed
+getClass update, now it use the ressource class
+
+#nfMouse
+bug fixing isPressed
+
+#nfComponentObjectContainer
+fixing

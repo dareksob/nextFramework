@@ -2,7 +2,8 @@
 {
 	import nextFramework.IExtension;
 	import nextFramework.nfRegistry;
-	import nextFramework.loader.types.*;
+	import nextFramework.loader.types.nfLoaderClass_Display;
+	import nextFramework.loader.types.nfLoaderClass_Text;
 	
 	/**
 	 * loader class 
@@ -28,7 +29,6 @@
 			
 			nfLoaderClass_Display.init();
 			nfLoaderClass_Text.init();
-			nfLoaderClass_TextField.init();
 			
 			this.reset();
 		}
@@ -48,7 +48,7 @@
 		/**
 		 * loader methode
 		 */
-		public function load(type:String, url:Object, conf:Object = null):ILoaderClass {
+		public function load(type:String, url:String, conf:Object = null):ILoaderClass {
 			var loaderNode:nfLoaderNode = nfLoaderNode.create(type, url, conf);
 			var loaderClass:ILoaderClass = nfLoader._loaderClassCollection.getLoaderClassByType(type);
 			

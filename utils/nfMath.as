@@ -37,10 +37,8 @@ package nextFramework.utils
 		static public function between(value:Number, min:Number, max:Number):Number {
 			if (value < min) {
 				value = min;
-				trace('min:' + min);
 			}else if (value > max) {
 				value = max;
-				trace('max:' + max);
 			}
 			return value;
 		}

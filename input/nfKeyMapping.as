@@ -59,7 +59,7 @@
 		 * call event
 		 * @param	keyCode
 		 */
-		internal function callKeyMap(keyCode:String, event:Event) {
+		internal function callKeyMap(keyCode:String, event:Event):void {
 			this._dispatcher.dispatchEvent(new nfKeyMappingEvent(keyCode, event));
 		}
 		

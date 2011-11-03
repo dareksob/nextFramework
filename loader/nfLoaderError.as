@@ -1,10 +1,10 @@
-package nextFramework.event
+package nextFramework.loader 
 {
 	import flash.events.ErrorEvent;
 	import flash.events.Event;
 	import nextFramework.loader.nfLoaderNode;
 	
-	/*
+	/**
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de

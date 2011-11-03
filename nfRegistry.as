@@ -3,11 +3,8 @@
 	import flash.display.DisplayObject;
 	import flash.display.Stage;
 	import flash.events.Event;
-	import nextFramework.collection.IKeyValueNode;
-	import nextFramework.collection.IKeyCollection;
-	import nextFramework.collection.nfKeyValueCollection;
-	import nextFramework.collection.nfKeyValueNode;
 	import nextFramework.debug.ILog;
+	import nextFramework.loader.IRessource;
 	import nextFramework.utils.nfList;
 	
 	/**
@@ -18,16 +15,25 @@
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.06
+	 * @version 1.09
 	 */
-	public final class nfRegistry implements IKeyCollection
+	public final class nfRegistry
 	{
 		private var _root:DisplayObject = null;
 		private var _stage:Stage = null;
 		private var _initList:Vector.<Function>;
-		private var _collection:nfKeyValueCollection;
+		private var _collection:Object;
 		
 		//singelton construction
+		public function nfRegistry() 
+		{
+			if(!nfRegistry._canCreate){
+				throw new Error('nfRegistry is a singelton class.');
+			}
+			this._initList = new Vector.<Function>();
+			this._collection = { };
+		}
+		
 		static private var _instance:nfRegistry = null;
 		static private var _canCreate:Boolean = false;
 		static public function get instance():nfRegistry
@@ -40,14 +46,6 @@
 			return nfRegistry._instance;
 		}
 		
-		public function nfRegistry() 
-		{
-			if(!nfRegistry._canCreate){
-				throw new Error('nfRegistry is a singelton class.');
-			}
-			this._initList = new Vector.<Function>();
-			this._collection = new nfKeyValueCollection(true);
-		}
 		
 		/**
 		 * add new key 
@@ -55,12 +53,13 @@
 		 * @param	key
 		 * @param	value
 		 */
-		public function add(key:Object, value:*):void {
+		public function add(key:String, value:*):Boolean {
 			if (!this.hasKey(key)) {
-				this._collection.add(new nfKeyValueNode(key, value, false));
-			}else {
-				throw new Error('This key has been set: ' + key, this);
+				this._collection[key] = value;
+				return true;
 			}
+			nfRegistry.addLog('This key has been set: ' + key, this);
+			return false;
 		}
 		
 		/**
@@ -70,12 +69,8 @@
 		 * @param	value
 		 * @return	keynode value
 		 */
-		public function getByKey(key:Object):*{
-			var node:IKeyValueNode = this._collection.getNodeByKey(key);
-			if (!node) {
-				throw new Error("This key doesn't exits: " + key, this);
-			}
-			return node.value;
+		public function getByKey(key:String):* {
+			return this._collection[key];
 		}
 		
 		/**
@@ -84,26 +79,10 @@
 		 * @param	key
 		 * @return	Boolean
 		 */
-		public function hasKey(key:Object):Boolean {
-			return this._collection.hasKey(key);
+		public function hasKey(key:String):Boolean {
+			return this._collection[key] != null;
 		}
 		
-		
-		/**
-		 * init function for auto calling
-		 * 
-		 * @param	func
-		 * @return	nfRegistry
-		 */
-		public function initFunc(func:Function):nfRegistry {
-			if(func is Function){
-				this._initList.push(func);
-				
-				//call all regist if its possible
-				this.callFunctions();
-			}
-			return this;
-		}
 		
 		/**
 		 * return the root object
@@ -135,6 +114,22 @@
 		}
 		
 		/**
+		 * 	return a ressource object if set
+		 *	if you want to set it uses a "ressources" key 
+		 */
+		public function get ressources():IRessource {
+			if (this.hasKey("ressources")) {
+				return this.getByKey("ressources") as IRessource;
+			}
+			return null;
+		}
+		public function set ressources(value:IRessource):void {
+			if (!this.hasKey("ressources")) {
+				this.add("ressources", value);
+			}
+		}
+		
+		/**
 		 * catch the errors and messages methode, if regist a ILog class, nF Internal
 		 */
 		static public function addLog(message:*, caller:* = null):void {
@@ -151,13 +146,29 @@
 		 */
 		public function setRoot(value:DisplayObject):nfRegistry {
 			if (!this._root) {				
-				this._root = value;
+				this._root = value.root;
 				
 				if (this._root.stage) {
 					this.eventAdded(null);	
 				}else {
 					this._root.addEventListener(Event.ADDED_TO_STAGE, eventAdded);
 				}
+			}
+			return this;
+		}
+		
+		/**
+		 * init function for auto calling
+		 * 
+		 * @param	func
+		 * @return	nfRegistry
+		 */
+		public function initFunc(func:Function):nfRegistry {
+			if(func is Function){
+				this._initList.push(func);
+				
+				//call all regist if its possible
+				this.callFunctions();
 			}
 			return this;
 		}

@@ -29,7 +29,7 @@ package nextFramework.xml.parser
 		 * load xml file and start to parse of ready
 		 * @param	url
 		 */
-		public function loadXMLAndParse(url:String, onComplete:Function = null):void {
+		public function loadAndParse(url:String, onComplete:Function = null):void {
 			if (onComplete is Function) {
 				//optional call function after complete
 				this.addEventListener(XMLObjectParser.EVENT_PARSECOMPLETE, onComplete);
@@ -59,6 +59,10 @@ package nextFramework.xml.parser
 		private function xmlLoadedError(error:ErrorEvent):void {
 			nfRegistry.addLog(error.text, this);
 			this.dispatchEvent(new ErrorEvent(XMLObjectParser.EVENT_XMLLOADINGERROR));
+		}
+		
+		public function get xml():XML {
+			return this._xml;
 		}
 	}
 

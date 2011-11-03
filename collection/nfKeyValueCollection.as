@@ -95,16 +95,7 @@
 			}
 			return null;
 		}
-		
-		/**
-		 * get IKeyValueNode by key and remove it from collection
-		 * @param	key
-		 * @return	IKeyValueNode
-		 */
-		public function getAndRemoveByKey(key:Object):IKeyValueNode {
-			return this.getNodeByKey(key, true);
-		}
-		
+			
 		/**
 		 * return IKeyValueNode by index
 		 * @param	index

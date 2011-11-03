@@ -1,7 +1,7 @@
 package nextFramework.utils
 {
 	
-	/*
+	/**
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de

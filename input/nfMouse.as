@@ -15,7 +15,7 @@
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.08
+	 * @version 1.09
 	 */
 	 
 	public final class nfMouse
@@ -99,7 +99,7 @@
 		public function get activate():Boolean { 
 			return this._activate; 
 		}
-		public function set activate(value:Boolean) {
+		public function set activate(value:Boolean):void {
 			this._activate = value; 
 		}
 		public function isActivate():Boolean {
@@ -172,7 +172,6 @@
 				
 				this._isOver = true;
 				this._mousePosition = new nfPoint(event.stageX, event.stageY);
-				this._isPressed = true;
 				this._delta = event.delta;
 
 				if (event.buttonDown) {

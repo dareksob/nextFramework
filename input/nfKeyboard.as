@@ -13,7 +13,7 @@
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.08
+	 * @version 1.09
 	 */
 	 
 	public class nfKeyboard
@@ -109,8 +109,13 @@
 		{
 			if (this.isActivate) {
 				this.updateKeyProperties(true, event);
+				
+				//by command combination
 				var keycode:String = nfKeyboardKeyCodeCreator.createByEvent(KeyboardEvent.KEY_DOWN, event, this._pressedKeyCodes);
 				this.keyMapping.callKeyMap(keycode, event);
+				
+				//by key pressing
+				this.keyMapping.callKeyMap(KeyboardEvent.KEY_DOWN, event);
 			}
 		}
 		/**
@@ -121,8 +126,13 @@
 		{
 			if (this.isActivate) {
 				var releasedKeyCodes:Array = this.updateKeyProperties(false, event);
+				
+				//by command combination
 				var keycode:String = nfKeyboardKeyCodeCreator.createByEvent(KeyboardEvent.KEY_UP, event, releasedKeyCodes);
-				this.keyMapping.callKeyMap(keycode, event);
+				this.keyMapping.callKeyMap(keycode, event); 
+				
+				//by key pressing
+				this.keyMapping.callKeyMap(KeyboardEvent.KEY_UP, event); 
 			}
 		}
 		

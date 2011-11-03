@@ -1,0 +1,52 @@
+nextFramework 1.08 Protocol
+
+#nfRegistry
+public setRoot
+
+#nfKeyboardKeyCode
+new enum class
+
+#nfMouseKeyCode
+new enum class
+
+#nfMouseKeyCodeCreator
+new, creater for keycodes for nfMouse
+Keycode helper Klasse for das erstellen von Keycode Kommandos
+
+
+#nfKeyMapping
+refactoring
+
+#nfKeyMappingNode
+delete
+
+#nfKeyMappingEvent
+new event class for KeyMapping Events
+
+#nfMouse
+refactoring
+
+#nfKeyboard
+refactoring
+
+#nfConnector
+nextFramework.transform.connector.*
+new class for connecting object properties.
+neue Klasse für das verbinden von Objektparameter.
+
+#nfLoader
+plugins textfield and binary and xmlloader removed as default plugin, have to inizialize
+textfield and binary and xmlloader standard plugins entfernt, muss inizialisiert werden
+
+#nextFramework.utils.parser.*
+parser classes for parse number, string, int and boolean values
+parser klassen um number, string, int und boolean werte zu auszugeben
+
+
+#nfString
+new, firstUpperCase function
+
+#nfObject
+refactoring and new clone methode
+refactoring und neue clone funktion
+

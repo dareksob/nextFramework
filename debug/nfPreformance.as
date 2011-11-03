@@ -2,22 +2,37 @@
 {
 	import flash.utils.getTimer;
 	
-	/*
+	/**
+	 * Test Class for preformance testing
+	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.0 beta
+	 * @version 1.08
 	 */
 	 
-	public class nfPreformance extends nfTest
+	public class nfPreformance
 	{
+		private var _loops:int = 0;
+		private var _name:String = "";
+		private var starttime:int = 0;
+		private var endtime:int = 0;
 		
-		public function nfPreformance(name:String = "", loops:int = 1000) 
+		public function nfPreformance(loops:int = 1000) 
 		{
-			super(name);
 			this.setLoops(loops);
+		
+		}
+		/*
+		 * name
+		 */
+		public function get name():String { 
+			return this._name; 
+		}
+		public function set name(value:String) {
+			this._name = value; 
 		}
 		
 		public function setName(name:String):nfPreformance {
@@ -25,7 +40,13 @@
 			return this;
 		}
 		
-		public var loops:int = 0;
+		public function get loops():int { 
+			return this._loops; 
+		}
+		public function set loops(value:int) {
+			this._loops = value; 
+		}
+		
 		public function setLoops(loops:int = 1000):nfPreformance {
 			this.loops = loops;
 			return this;
@@ -46,9 +67,7 @@
 			return this;
 		}
 		
-		
-		private var starttime:int = 0;
-		private var endtime:int = 0;
+
 		public function start():nfPreformance {
 			this.starttime = getTimer();
 			return this;
@@ -73,16 +92,12 @@
 			return time;
 		}
 		
-		public function loopFunction(func:Function, args:Object = null):nfPreformance {
-			for (var count:int = 0; count < this.loops; count++) {
-				func.call(null, args);
-			}
-			return this;
-		}
-		public function loopFunctionTest(func:Function):nfPreformance {
+
+		public function loopFunctionTest(testName:String, func:Function, args:Object = null):nfPreformance {
+			this.name = testName;
 			this.stop().start();
-			for (var count:int = 0; count < this.loops; count++) {
-				func.call(null);
+			for (var count:int = 0; count < this._loops; count++) {
+				func.call(args);
 			}
 			this.stop().print();
 			return this;
@@ -92,8 +107,9 @@
 			trace(this.toString());
 			return this;
 		}
+		
 		public function toString():String {
-			return '[nfPreformance] name:' + this.name + ' time:' + this.getTime() + _selectedTimeformat + ' by ' + this.loops + ' loops';
+			return '[nfPreformance] name:' + this.name + ' time:' + this.getTime() + this._selectedTimeformat + ' by ' + this.loops + ' loops';
 		}
 	}
 

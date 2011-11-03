@@ -89,7 +89,7 @@
 		 * @param	conf
 		 * @return	nF
 		 */
-		public function load(type:String, url:Object, conf:Object = null):nF {
+		public function load(type:String, url:String, conf:Object = null):nF {
 			//auto setting
 			if (!conf) conf = { selection: this._selection, root: this._root };
 			else conf.selection = this._selection; conf.root = this._root;

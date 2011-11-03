@@ -2,14 +2,14 @@ package nextFramework.component
 {
 	
 	/**
-	 * base class for components
+	 * abstract base class for components
 	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.0 beta
+	 * @version 1.0
 	 */
 	 
 	public class nfComponentObject implements IComponentObject
@@ -63,6 +63,17 @@ package nextFramework.component
 		private var _container:nfComponentObjectContainer;
 		public function get container():nfComponentObjectContainer { 
 			return this._container; 
+		}
+		
+		/**
+		 * activate or deactivate component 
+		 */
+		protected var _activate:Boolean = true;
+		public function set activate(value:Boolean):void {
+			this._activate = value;
+		}
+		public function get activate():Boolean {
+			return this._activate;
 		}
 		
 	}

@@ -4,10 +4,12 @@ package nextFramework.loader.types
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
-	import nextFramework.loader.*;
+	import nextFramework.loader.nfLoaderObject_Abstract;
+	import nextFramework.loader.ILoaderClass;
+	import nextFramework.loader.nfLoader;
 	import flash.events.Event;
 
-	/*
+	/**
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de

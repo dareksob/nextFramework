@@ -9,7 +9,7 @@
 	import nextFramework.collection.IKeyValueNode;
 	
 	/**
-	 * Main Component Design Class
+	 * Main Component design class for nF
 	 * 
 	 * @author Darius Sobczak
 	 * @website dsobczak.de

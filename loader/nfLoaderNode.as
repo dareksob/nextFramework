@@ -1,21 +1,21 @@
 ﻿package nextFramework.loader 
 {
-	import nextFramework.nfProperties;
+	import nextFramework.utils.nfObject;
 	
-	/*
+	/**
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.02 beta
+	 * @version 1.07
 	 */
 	 
 	public class nfLoaderNode
 	{
-		static public function create(type:String, url:Object, conf:Object):nfLoaderNode {
+		static public function create(type:String, url:String, conf:Object):nfLoaderNode {
 			var _this:nfLoaderNode = new nfLoaderNode();
-			nfProperties.setObjectProperties(_this, conf);
+			nfObject.setProps(_this, conf);
 			_this.type = type;
 			_this.url = url;
 			_this.conf = conf;
@@ -25,11 +25,11 @@
 		/*
 		 * url
 		 */
-		private var _url:Object;
-		public function get url():Object {
+		private var _url:String;
+		public function get url():String {
 			return this._url; 
 		}
-		public function set url(value:Object):void {
+		public function set url(value:String):void {
 			this._url = value; 
 		}
 		

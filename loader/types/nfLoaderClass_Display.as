@@ -1,19 +1,22 @@
 ﻿package nextFramework.loader.types
 {
-	import nextFramework.loader.*;
-	import flash.net.*;
-	import flash.events.*;
-	import flash.display.*;
-	import nextFramework.nF;
-	import nextFramework.nfProperties;
+	import flash.display.AVM1Movie;
+	import flash.events.Event;
+	import flash.net.URLRequest;
+	import flash.display.Loader;
+	import flash.display.LoaderInfo;
+	import nextFramework.loader.ILoaderClass;
+	import nextFramework.loader.nfLoader;
+	import nextFramework.loader.nfLoaderObject_Abstract;
+	import nextFramework.utils.nfObject;
 	
-	/*
+	/**
 	 * @author Darius Sobczak
 	 * @website dsobczak.de
 	 * @mail mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.04 beta
+	 * @version 1.09
 	 */
 	 
 	public class nfLoaderClass_Display extends nfLoaderObject_Abstract implements ILoaderClass
@@ -41,13 +44,7 @@
 				this.loaderNode.object = LoaderInfo(event.currentTarget).content;
 			}
 			
-			
-				
-			if (this.loaderNode.conf.addTo) {
-				nF.create(this.loaderNode.conf.addTo, true).addChild(this.loaderNode.object, this.loaderNode.conf.prop);
-			}else if (this.loaderNode.conf.prop) {
-				nfProperties.setObjectProperties(this.loaderNode.object, this.loaderNode.conf.prop);
-			}
+			nfObject.setProps(this.loaderNode.object, this.loaderNode.conf.prop);
 			
 			super.eventCompleteHandler(event);
 		}		

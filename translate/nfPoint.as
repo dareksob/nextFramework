@@ -20,6 +20,10 @@
 			this.x = x;
 			this.y = y;
 		}
+		
+		public function toString():String {
+			return "nfPoint x:" + this.x + " y:" + this.y;
+		}
 	}
 
 }

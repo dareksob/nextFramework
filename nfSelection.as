@@ -142,7 +142,7 @@
 			//get class
 			var classobject:Class;
 			if(classname){
-				classobject = nfClass.getClassByName(classname, true);
+				classobject = nfClass.getClass(classname);
 			}
 			
 			//clean name

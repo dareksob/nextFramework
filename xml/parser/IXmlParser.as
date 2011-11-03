@@ -13,7 +13,7 @@ package nextFramework.xml.parser
 	 */
 	public interface IXmlParser 
 	{
-		function loadXMLAndParse(file:String, onComplete:Function = null):void;
+		function loadAndParse(file:String, onComplete:Function = null):void;
 		function parseXML(xml:XML):void;
 	}
 	

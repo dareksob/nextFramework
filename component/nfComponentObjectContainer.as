@@ -10,7 +10,7 @@
 	 * @mail 	mail@dsobczak.de
 	 *
 	 * @website nextframework.de
-	 * @version 1.07
+	 * @version 1.09
 	 */
 	 
 	public class nfComponentObjectContainer
@@ -19,7 +19,9 @@
 		public function get object():*{
 			return this._object;
 		}
-		
+		/**
+		 * container and connector for components
+		 */
 		public function nfComponentObjectContainer(object:*) {
 			this._object = object;
 		}
@@ -43,10 +45,13 @@
 			var compobj:* = new comp(this, this._object);
 						
 			if(compobj is IComponentObject){
-				nfObject.setProps(compobj, conf);
 				index = this._componentObjects.push(compobj as IComponentObject);
 				compobj.init(conf);
 				compobj.added();
+				
+				if (compobj is IUpdateComponentObject) {
+					nfComponentRenderer.add(compobj);
+				}
 			}
 			return index;
 		}
