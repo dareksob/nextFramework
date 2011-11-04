@@ -13,12 +13,11 @@
 	public class StringParser implements IParser
 	{
 		public static function parse(value:*, defaultValue:String = ""):String {
-			var result:String = defaultValue;
+			var result:String = defaultValue
 			if (value) {
-				result = value.toString();
+				result = String(value);
 			}
 			return result;
-		}
 	}
 
 }

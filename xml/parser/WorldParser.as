@@ -17,6 +17,7 @@ package nextFramework.xml.parser
 		protected var _libary:Object = { };
 		protected var _assets:Array = new Array;
 		protected var _objectKey:String = "object";
+		protected var _addTranslate:Boolean = true;
 		
 		public function get assets():Array {
 			return this._assets;
@@ -46,15 +47,18 @@ package nextFramework.xml.parser
 					var objectData:Object = {};
 					
 					var objectXml:XML = node[this._objectKey][0] as XML;
-					if(objectXml is XML){
+					if (objectXml is XML) {
+						
 						objectData = this.parseXmlToObjectData(objectXml);
+						
+						if(!this._libary[name]){
+							this._libary[name] = objectData;
+						}else{
+							nfRegistry.addLog("Dublicate libaryname. "+name, this);
+						}
 					}
 					
-					if(!this._libary[name]){
-						this._libary[name] = objectData;
-					}else{
-						nfRegistry.addLog("Dublicate libaryname. "+name, this);
-					}
+					
 				}
 			}
 		}
@@ -68,14 +72,14 @@ package nextFramework.xml.parser
 				var nodeConfig:Object = { 
 					name: node.@name.toString() 
 				};
+				var createEntry:Boolean = false;
 				
 				//set libary
 				var libaryname:String = node.@libary.toString();
 				if (libaryname) {
 					if (this._libary[libaryname]) {
 						nfObject.extend(nodeConfig, this._libary[libaryname], true);
-					}else {
-						nfRegistry.addLog("Libary object not found. " + libaryname, this);
+						createEntry = true;
 					}
 				}
 				
@@ -83,10 +87,15 @@ package nextFramework.xml.parser
 				var objectXml:XML = node[this._objectKey][0] as XML;
 				if(objectXml is XML){
 					nfObject.extend(nodeConfig, this.parseXmlToObjectData(objectXml));
+					createEntry = true;
 				}
 				
-				this.extendAndParseTranslate(nodeConfig, node);
-				this.addAsset(nodeConfig);
+				if (createEntry) {
+					if(this._addTranslate){
+						this.extendAndParseTranslate(nodeConfig, node);
+					}
+					this.addAsset(nodeConfig);
+				}
 			}
 		}
 		

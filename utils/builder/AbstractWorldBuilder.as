@@ -1,14 +1,11 @@
 package nextFramework.utils.builder 
 {
 	import flash.events.Event;
-	import nextFramework.extension.sandy3d.factory.Shape3dFactory;
-	import nextFramework.extension.sandy3d.parser.World3dParser;
 	import nextFramework.nfRegistry;
 	import nextFramework.utils.parser.IAssetParser;
-	import nextFramework.xml.parser.IXmlParser;
 	import nextFramework.utils.parser.IParserBuilder;
+	import nextFramework.xml.parser.IXmlParser;
 	import sandy.core.scenegraph.Group;
-	import sandy.core.scenegraph.Shape3D;
 	
 	/**
 	 * Abstract World Builder
@@ -18,9 +15,12 @@ package nextFramework.utils.builder
 	{
 		private var _parser:IAssetParser;
 		private var _group:Group;
-		private var _assets:Array;
+		private var _assets:Object;
+		private var _assetsLength:uint = 0;
+		
 		public var onBuilded:Function = null;
 		
+		protected var _assetDefaultName:String = "object";
 		protected var _requiredClass:Class = Object;
 		protected var _parserClass:Class = null;
 		
@@ -60,8 +60,9 @@ package nextFramework.utils.builder
 				for each(var nodeConf:Object in conf) {
 					var objectNode:Object = this.createObject(nodeConf);
 					if (objectNode is this._requiredClass) {
-						this.addObjectToAssets(objectNode);
+						this.addObjectToAssets(objectNode, nodeConf.name);
 						createdList.push(objectNode);
+						this._assetsLength++;
 					}else {
 						nfRegistry.addLog(this._requiredClass + " cannot build.", this);
 					}
@@ -75,7 +76,7 @@ package nextFramework.utils.builder
 		 * @param	nodeConf
 		 * @return
 		 */
-		protected function createObject(nodeConf:Object):Object { 
+		protected function createObject(nodeConf:Object):* { 
 			throw new Error("createObject is a abstract methode, override it!");
 		}
 		
@@ -84,8 +85,18 @@ package nextFramework.utils.builder
 		 * @param	node
 		 * @return
 		 */
-		protected function addObjectToAssets(node:*):void {
-			this._assets.push(node);
+		protected function addObjectToAssets(node:*, name:String = ""):String {
+			var assetName:String = this._assetDefaultName + this._assetsLength;
+			
+			if (name.length > 0) {
+				if (this._assets[name] == null) {
+					assetName = name;
+				}else {
+					nfRegistry.addLog("Dublucate asset name: " + name, this);
+				}
+			}
+			this._assets[assetName] = node;
+			return assetName;
 		}
 		
 		/**
@@ -94,9 +105,9 @@ package nextFramework.utils.builder
 		 * @return
 		 */
 		public function getAssetByName(name:String):* {
-			for each(var asset:* in this._assets) {
-				if (asset.name == name) {
-					return asset;
+			for (var assetName:String in this._assets) {
+				if (assetName == name) {
+					return this._assets[assetName];
 				}
 			}
 			return null;
@@ -105,8 +116,15 @@ package nextFramework.utils.builder
 		/**
 		 * return the created assets
 		 */
-		public function get assets():Array {
+		public function get assets():Object {
 			return this._assets;
+		}
+		
+		/**
+		 * return counter
+		 */
+		public function get assetsLength():uint {
+			return this._assetsLength;
 		}
 		
 		/**

@@ -84,7 +84,6 @@
 		 */
 		public function loadRessource(file:String):void {
 			_ressourcesFiles.push(file);
-			this.loadNextRessource("");
 		}
 		
 		/**

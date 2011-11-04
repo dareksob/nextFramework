@@ -143,6 +143,7 @@
 				this._isLeftPressed = false;
 				this._isRightPressed = false;
 				this._mousePositionMouseUp = new nfPoint(event.stageX, event.stageY);
+				this.keyMapping.callKeyMap(nfMouseKeyCodeCreator.createByEvent(nfMouseKeyCode.EVENT_MOUSEUP, event), event);
 				this.keyMapping.callKeyMap(nfMouseKeyCodeCreator.createByEvent(nfMouseKeyCode.EVENT_CLICK, event), event);
 			}
 		}

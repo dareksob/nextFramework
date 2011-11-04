@@ -31,16 +31,16 @@ package nextFramework
 		private function initNextFramework():void {
 			
 			var registry:nfRegistry = nfRegistry.instance;
-			
-			registry.initClasses(this._conf.initClasses);	
-			registry.setRoot(this._root);
-			
+
 			//add logger
 			if (this._debug && this._conf.log is ILog) {
 				registry.log = this._conf.log;
 			}
 			
 			this.addLog("init nextFramework");
+
+			registry.initClasses(this._conf.initClasses);	
+			registry.setRoot(this._root);
 			
 			//load xml
 			if (this._conf.loadXML is String) {
@@ -55,8 +55,7 @@ package nextFramework
 			}
 		}
 		
-		
-		
+
 		private function initRessources():void {
 			this.addLog("init Ressources");
 			
@@ -79,9 +78,9 @@ package nextFramework
 			
 			//load ressources by xml
 			if(this._xml){
-				if (this._xml.ressources.file.length() > 0) {
-					for each(var xmlFile:XML in this._xml.ressources[0].file) {
-						file = xmlFile.@url.toString();
+				if (this._xml.ressources.ressource) {
+					for each(var ressource:XML in this._xml.ressources.ressource) {
+						file = ressource.toString();
 						if (file) {
 							ressources.loadRessource(file);
 							this.addLog("add Ressource: " + file);

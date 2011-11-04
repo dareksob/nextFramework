@@ -15,8 +15,6 @@
 	
 	public class nfTranslate 
 	{
-		public const DEGREES_TO_RADIANS:Number = 2 * Math.PI;
-		public const RADIANS_TO_DEGREES:Number = 180 / Math.PI;
 		public var position:nfVector = null;
 		public var rotation:Number = 0;
 		
